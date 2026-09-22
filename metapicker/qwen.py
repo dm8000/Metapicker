@@ -1,21 +1,29 @@
 """
-Cliente do Qwen3-Reranker 0.6B — a linha de base LOCAL do benchmark.
+Client for Qwen3-Reranker — the LOCAL baseline of the benchmark.
 
     POST http://127.0.0.1:10099/rerank
     {"model": ..., "query": ..., "documents": [...]}  ->  {"results":[{index, relevance_score}]}
 
-Um reranker nao decide nada: devolve `relevance_score` por par (query, documento). Virar
-sim/nao exige limiar, e o limiar sai de `limiar.py` ajustado nas revisoes FORA do conjunto
-de comparacao — nunca nas proprias.
+A reranker decides nothing: it returns a `relevance_score` per (query, document) pair.
+Turning that into yes/no requires a threshold, and the threshold comes from threshold.py
+fitted on the reviews OUTSIDE the comparison set — never on the reviews being reported.
 
-O SERVIDOR IMPORTA MAIS QUE O CLIENTE AQUI. A instancia compartilhada do llama-swap
-(porta 10012) sobe sem `--ubatch-size` e recusa com HTTP 500 qualquer par acima de 512
-tokens de batch fisico. Os criterios vao ate 689 tokens sozinhos. Use
-`metapicker/servir_rerank.sh`, que sobe na 10099 com `--ubatch-size 4096`.
+THE SERVER MATTERS MORE THAN THE CLIENT HERE. Two traps, both measured:
 
-A TRUNCAGEM ADAPTATIVA abaixo e rede de seguranca, NAO caminho normal. Se ela disparar, a
-comparacao daquela revisao esta comprometida — o Qwen teria recebido menos do que o JEV
-recebeu — entao ela grava em `TRUNCOU` e quem chama tem de reportar alto, nao no rodape.
+  1. the shared llama-swap instance starts without `--ubatch-size`, so the physical batch
+     stays at 512 tokens and it refuses any pair above that with HTTP 500. Criteria alone
+     reach 689 tokens;
+  2. `--parallel` DIVIDES `--ctx-size` across slots. `--ctx-size 4096 --parallel 8` gives
+     each slot 512 tokens and the server refuses with HTTP 400 exceed_context_size_error
+     — a DIFFERENT error from the one above, and one that only appears once you add
+     parallelism.
+
+Use `metapicker/serve_reranker.sh`, which handles both.
+
+THE ADAPTIVE TRUNCATION below is a safety net, NOT the normal path. If it fires, that
+review's comparison is compromised — the reranker would have received less criteria text
+than JEV did — so it records into `TRUNCATED` and the caller must report it loudly, not
+in a footnote.
 """
 
 from __future__ import annotations
@@ -29,161 +37,161 @@ from typing import Iterable
 import httpx
 
 URL = os.environ.get("QWEN_URL", "http://127.0.0.1:10099")
-MODELO = os.environ.get("QWEN_MODELO", "qwen3-reranker-0.6b")
-PARALELO = int(os.environ.get("QWEN_PARALELO", "8"))
-CHAVE_ARQ = Path("/home/phobos/LLMs/config/llama-swap.key")
+MODEL = os.environ.get("QWEN_MODEL", "qwen3-reranker")
+PARALLEL = int(os.environ.get("QWEN_PARALLEL", "8"))
+KEY_FILE = Path("/home/phobos/LLMs/config/llama-swap.key")
 
-# Revisoes em que a truncagem adaptativa disparou. Vazio = comparacao integra.
-TRUNCOU: dict[str, int] = {}
+# Reviews where adaptive truncation fired. Empty = the comparison is intact.
+TRUNCATED: dict[str, int] = {}
 
 
-class ErroQwen(RuntimeError):
+class QwenError(RuntimeError):
     pass
 
 
-class ErroFatalQwen(ErroQwen):
-    """Nao adianta repetir: servidor fora do ar, modelo errado, rota inexistente."""
+class FatalQwenError(QwenError):
+    """Pointless to retry: server down, wrong model, route missing."""
 
 
-class Conta:
+class Ledger:
     def __init__(self) -> None:
-        self.zerar()
+        self.reset()
 
-    def zerar(self) -> None:
-        self.chamadas = self.falhas = self.pares = 0
-        self.segundos = 0.0
-        self.latencias: list[float] = []
+    def reset(self) -> None:
+        self.calls = self.failures = self.pairs = 0
+        self.seconds = 0.0
+        self.latencies: list[float] = []
 
-    def registrar(self, n_pares: int, seg: float) -> None:
-        self.chamadas += 1
-        self.pares += n_pares
-        self.segundos += seg
-        self.latencias.append(seg)
+    def record(self, n_pairs: int, secs: float) -> None:
+        self.calls += 1
+        self.pairs += n_pairs
+        self.seconds += secs
+        self.latencies.append(secs)
 
     def p50(self) -> float:
-        return sorted(self.latencias)[len(self.latencias) // 2] if self.latencias else 0.0
+        return sorted(self.latencies)[len(self.latencies) // 2] if self.latencies else 0.0
 
-    def linhas(self, prefixo: str = "  ") -> list[str]:
-        if not self.chamadas:
-            return [f"{prefixo}nenhuma chamada"]
-        vazao = self.pares / self.segundos if self.segundos else 0.0
-        L = [f"{prefixo}chamadas    {self.chamadas:,}".replace(",", ".")
-             + (f" ({self.falhas} falharam)" if self.falhas else ""),
-             f"{prefixo}pares       {self.pares:,}".replace(",", "."),
-             f"{prefixo}latência p50 {self.p50():.2f}s por chamada",
-             f"{prefixo}vazão       {vazao:.1f} pares/s (soma das latências)"]
-        if TRUNCOU:
-            L.append(f"{prefixo}TRUNCOU em: {TRUNCOU} — comparação comprometida nessas")
+    def lines(self, prefix: str = "  ") -> list[str]:
+        if not self.calls:
+            return [f"{prefix}no calls"]
+        rate = self.pairs / self.seconds if self.seconds else 0.0
+        L = [f"{prefix}calls        {self.calls:,}"
+             + (f" ({self.failures} failed)" if self.failures else ""),
+             f"{prefix}pairs        {self.pairs:,}",
+             f"{prefix}latency p50  {self.p50():.2f}s per call",
+             f"{prefix}throughput   {rate:.1f} pairs/s (summed latency)"]
+        if TRUNCATED:
+            L.append(f"{prefix}TRUNCATED in: {TRUNCATED} — comparison compromised there")
         return L
 
 
-CONTA = Conta()
-_cliente: httpx.Client | None = None
+LEDGER = Ledger()
+_client: httpx.Client | None = None
 
 
-def _chave() -> str:
+def _key() -> str:
     try:
-        return CHAVE_ARQ.read_text().strip()
+        return KEY_FILE.read_text().strip()
     except Exception:
         return os.environ.get("LLAMA_SWAP_KEY", "")
 
 
-def cliente() -> httpx.Client:
-    global _cliente
-    if _cliente is None:
+def client() -> httpx.Client:
+    global _client
+    if _client is None:
         h = {"Content-Type": "application/json"}
-        k = _chave()
+        k = _key()
         if k:
             h["Authorization"] = f"Bearer {k}"
-        _cliente = httpx.Client(headers=h, timeout=httpx.Timeout(300.0, connect=10.0),
-                                limits=httpx.Limits(max_connections=PARALELO * 2))
-    return _cliente
+        _client = httpx.Client(headers=h, timeout=httpx.Timeout(300.0, connect=10.0),
+                               limits=httpx.Limits(max_connections=PARALLEL * 2))
+    return _client
 
 
-def pontuar(query: str, documentos: list[str], *, rotulo: str = "?",
-            tentativas: int = 3) -> list[float]:
+def score(query: str, documents: list[str], *, label: str = "?",
+          attempts: int = 3) -> list[float]:
     """
-    Devolve um score por documento, NA ORDEM DE ENTRADA — a API responde ordenada por
-    relevancia, e reordenar de volta e responsabilidade daqui. Trocar isso silenciosamente
-    associaria score ao registro errado, que e um erro que nao aparece em teste nenhum.
+    Returns one score per document, IN INPUT ORDER — the API responds sorted by
+    relevance, and restoring the original order is this function's job. Silently changing
+    that would attach scores to the wrong records, an error no test would catch.
     """
-    if not documentos:
+    if not documents:
         return []
-    docs = list(documentos)
-    espera = 1.0
-    for t in range(tentativas):
-        corpo = {"model": MODELO, "query": query, "documents": docs}
+    docs = list(documents)
+    wait = 1.0
+    for t in range(attempts):
+        body = {"model": MODEL, "query": query, "documents": docs}
         t0 = time.time()
         try:
-            r = cliente().post(f"{URL}/rerank", json=corpo)
+            r = client().post(f"{URL}/rerank", json=body)
         except httpx.HTTPError as e:
-            if t == tentativas - 1:
-                raise ErroFatalQwen(f"servidor fora do ar: {type(e).__name__}") from None
-            time.sleep(espera); espera *= 2
+            if t == attempts - 1:
+                raise FatalQwenError(f"server down: {type(e).__name__}") from None
+            time.sleep(wait); wait *= 2
             continue
         if r.status_code == 200:
             d = r.json()
-            CONTA.registrar(len(docs), time.time() - t0)
-            saida = [0.0] * len(docs)
+            LEDGER.record(len(docs), time.time() - t0)
+            out = [0.0] * len(docs)
             for x in d.get("results", []):
-                saida[int(x["index"])] = float(x["relevance_score"])
-            return saida
+                out[int(x["index"])] = float(x["relevance_score"])
+            return out
         txt = r.text[:200]
         if r.status_code == 500 and "too large" in txt.lower():
-            # Rede de seguranca. Com --ubatch-size 4096 isto NAO deve acontecer.
-            corte = max(200, int(max(len(x) for x in docs) * 0.6))
-            docs = [x[:corte] for x in docs]
-            TRUNCOU[rotulo] = TRUNCOU.get(rotulo, 0) + 1
+            # Safety net. With --ubatch-size 4096 this should NOT happen.
+            cut = max(200, int(max(len(x) for x in docs) * 0.6))
+            docs = [x[:cut] for x in docs]
+            TRUNCATED[label] = TRUNCATED.get(label, 0) + 1
             continue
         if r.status_code in (401, 404):
-            raise ErroFatalQwen(f"HTTP {r.status_code}: {txt}")
-        if t == tentativas - 1:
-            raise ErroQwen(f"HTTP {r.status_code}: {txt}")
-        time.sleep(espera); espera *= 2
-    raise ErroQwen("esgotou as tentativas")
+            raise FatalQwenError(f"HTTP {r.status_code}: {txt}")
+        if t == attempts - 1:
+            raise QwenError(f"HTTP {r.status_code}: {txt}")
+        time.sleep(wait); wait *= 2
+    raise QwenError("ran out of attempts")
 
 
-def em_lote(trabalhos: Iterable[tuple[str, list[str], str]], *,
-            paralelo: int = PARALELO, progresso=None) -> list[list[float] | None]:
-    """Varios (query, documentos, rotulo) em paralelo, preservando a ORDEM de entrada."""
-    trabalhos = list(trabalhos)
-    saida: list[list[float] | None] = [None] * len(trabalhos)
-    fatal: list[ErroFatalQwen] = []
-    feitos = 0
+def in_batch(jobs: Iterable[tuple[str, list[str], str]], *,
+             parallel: int = PARALLEL, progress=None) -> list[list[float] | None]:
+    """Several (query, documents, label) in parallel, preserving INPUT ORDER."""
+    jobs = list(jobs)
+    out: list[list[float] | None] = [None] * len(jobs)
+    fatal: list[FatalQwenError] = []
+    done = 0
 
-    def um(i: int):
+    def one(i: int):
         if fatal:
             return i, None
-        q, docs, rot = trabalhos[i]
+        q, docs, lab = jobs[i]
         try:
-            return i, pontuar(q, docs, rotulo=rot)
-        except ErroFatalQwen as e:
+            return i, score(q, docs, label=lab)
+        except FatalQwenError as e:
             fatal.append(e); return i, None
-        except ErroQwen:
-            CONTA.falhas += 1; return i, None
+        except QwenError:
+            LEDGER.failures += 1; return i, None
 
-    with ThreadPoolExecutor(max_workers=paralelo) as ex:
-        for i, r in ex.map(um, range(len(trabalhos))):
-            saida[i] = r
-            feitos += 1
-            if progresso and feitos % 5 == 0:
-                progresso(feitos, len(trabalhos))
+    with ThreadPoolExecutor(max_workers=parallel) as ex:
+        for i, r in ex.map(one, range(len(jobs))):
+            out[i] = r
+            done += 1
+            if progress and done % 5 == 0:
+                progress(done, len(jobs))
     if fatal:
         raise fatal[0]
-    if progresso:
-        progresso(feitos, len(trabalhos))
-    return saida
+    if progress:
+        progress(done, len(jobs))
+    return out
 
 
-def documento(titulo: str, abstract: str) -> str:
-    """Mesmo marcador de ausencia que triagem.montar_estado usa, para os dois modelos
-    verem a MESMA ausencia e nao um deles ver um campo vazio."""
+def document(title: str, abstract: str) -> str:
+    """Same absence marker screening.build_state uses, so both models see the SAME
+    absence rather than one of them seeing an empty field."""
     a = (abstract or "").strip() or "(no abstract available for this record)"
-    return f"{(titulo or '').strip()}\n\n{a}"
+    return f"{(title or '').strip()}\n\n{a}"
 
 
-def consulta(revisao: dict) -> str:
-    """Exatamente o que foi ao JEV: titulo da revisao + criterios integros."""
-    t = (revisao.get("pergunta") or revisao.get("titulo") or "").strip()
-    c = (revisao.get("criterios_brutos") or "").strip()
+def query(review: dict) -> str:
+    """Exactly what went to JEV: review title plus the criteria, intact."""
+    t = (review.get("question") or review.get("title") or "").strip()
+    c = (review.get("raw_criteria") or "").strip()
     return f"{t}\n\n{c}".strip() if t else c

@@ -1,6 +1,6 @@
 api_key_jev.txt
-dados/
-resultados/*.sqlite
+data/
+results/*.sqlite
 __pycache__/
 *.pyc
 .venv/

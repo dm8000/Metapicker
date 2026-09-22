@@ -1,126 +1,163 @@
 # Metapicker
 
-Benchmark do **JEV** (TypeSafe, *System One model*) em **triagem de revisões
-sistemáticas**: dados os critérios de elegibilidade de uma revisão real e o conjunto
-completo de registros que os autores recuperaram, o JEV separa o que vale recuperar do
-que não vale?
+A benchmark of **JEV** (TypeSafe, a *System One model*), **DeepSeek V4 Flash** and a local
+**Qwen3-Reranker** on **systematic review screening**: given a review's eligibility
+criteria and the complete set of records its authors retrieved, can a model separate what
+is worth reading from what is not?
 
-O requisito que define o desenho: a avaliação roda sobre **o conjunto completo triado
-pelos autores**, não sobre os estudos incluídos. Sem os excluídos documentados não há
-especificidade a medir.
+The requirement that shapes the whole design: evaluation runs over **the complete set the
+authors screened**, not over the studies they included. Without the documented exclusions
+there is no specificity to measure.
 
-## Instalação
+## Result
+
+257 records with an abstract, across 3 reviews. 66 of them (26%) were kept by the authors
+for full-text reading.
+
+| method | kept | % of list | correct among kept | correct among discarded | of the 66, kept | AUC | cost |
+|---|---|---|---|---|---|---|---|
+| **JEV `choice`, batched** | 115 | 45% | **45.2%** | 90.1% | 52 | **0.729** | **US$ 0.0086** |
+| DeepSeek V4 Flash | **101** | 39% | **45.5%** | 87.2% | 46 | 0.705 | US$ 0.0315 |
+| Qwen3-Reranker 8B (local) | 177 | 69% | 36.7% | **98.8%** | **65** | 0.699 | **US$ 0** |
+| Qwen3-Reranker 0.6B (local) | 222 | 86% | 29.7% | 100.0% | 66 | 0.592 | US$ 0 |
+| *random half* | *128* | *50%* | *25.7%* | *74.3%* | *33* | *0.500* | — |
+| *(the authors)* | *66* | *26%* | *100%* | *100%* | *66* | — | — |
+
+**The random row is the one that recalibrates the others.** Cutting half the list at random
+already scores 74.3% "correct among discarded", because three quarters of the records
+deserve discarding anyway. JEV's 90.1% is +16 points over chance, not 90 points of merit.
+
+The column chance cannot explain is **how many of the 66 survived**: 52, 46, 65 and 66
+against 33 for the coin flip. Removing half at random leaves ~33 of the good articles, and
+the probability that all 66 survive is ~10⁻³⁴.
+
+**The 8B reranker is the safest of all at not losing a study** — it drops 1 of 66 while
+cutting 31% of the list, free, on a local GPU. With continuous scores its ranking AUC is
+**0.896**, above both flagship models. It ranks well and decides poorly: to avoid losing
+studies its threshold forces it to keep 177 of 257.
+
+The AUC column is for binary decisions — it equals (sensitivity + specificity)/2 and does
+not measure ranking. It is the only form comparable across all four, since DeepSeek
+produces nothing but yes/no.
+
+For scale: in `Hanlon_2022` the agreement between the **two human reviewers** was
+**kappa 98%**. The distance to human performance is not a matter of fine tuning.
+
+## Install
 
 ```bash
 pip install httpx synergy-dataset
-python -m synergy_dataset get -l -o dados/synergy_plus -v publication_year
+python -m synergy_dataset get -l        # downloads SYNERGY+ v3.0 to ~/.synergy_dataset_source
+python metapicker/sources/synergy.py build
 ```
 
-A chave do JEV vai em `api_key_jev.txt` (já no `.gitignore`) ou em `TYPESAFE_API_KEY`.
+The JEV key goes in `api_key_jev.txt` (already in `.gitignore`) or in `TYPESAFE_API_KEY`.
 
-## Uso
+## Use
 
 ```bash
-python testes/test_jev.py && python testes/test_metricas.py   # nenhum toca a rede
+python tests/test_jev.py && python tests/test_metrics.py     # none touch the network
+python tests/test_run.py && python tests/test_deepseek.py
 
-python metapicker/fontes/synergy.py catalogo      # o que existe e quanto custa cada um
-python metapicker/correr.py --revisoes X Y Z --orcamento 0.10
-python metapicker/avaliar.py --alvo ta --facetas
-python metapicker/limiar.py  --alvo ta
-python metapicker/baseline.py --alvo ta           # BM25, CPU
+python metapicker/sources/synergy.py catalogue   # what exists and what each costs
+python metapicker/run.py --reviews X Y Z --budget 0.10
+python metapicker/run_batch.py --per-call 100    # 5x cheaper, same accuracy
+python metapicker/evaluate.py --target ta --facets
+python metapicker/threshold.py --target ta --quantile 0.10
+python metapicker/baseline.py --target ta        # BM25, CPU
+
+bash metapicker/serve_reranker.sh                # local reranker, GPU
+python metapicker/run_qwen.py --variant qwen8b
+
+python metapicker/deepseek.py generate           # paste files for the chat window
+python metapicker/deepseek.py import-review --file results/hanlon.txt --review Hanlon_2022
+
+python metapicker/compare.py --target ta --with-abstract-only
 ```
 
-`correr.py` é retomável: rodar de novo continua de onde parou, e `--orcamento` corta a
-rodada no teto em dólares.
+`run.py` is resumable: rerunning continues where it stopped, and `--budget` caps the run
+in dollars.
 
-## O que este benchmark mede, e o que não mede
+## What this measures, and what it does not
 
-**Mede** a triagem título/abstract: dados os critérios e o par título+abstract, este
-registro deve ir para leitura de texto completo? É a decisão que descarta ~98% dos
-registros de uma revisão, e onde um erro custa um estudo perdido.
+**It measures** title/abstract screening: given the criteria and a title+abstract pair,
+should this record go to full-text reading? That is the decision that discards ~98% of a
+review's records, and where an error costs a lost study.
 
-**Não mede** a elegibilidade final. Essa depende do texto completo, e os autores só o
-leram para os poucos que passaram na triagem. O alvo primário é por isso
-`label_abstract_included`, não `label_included`; a diferença entre os dois é reportada
-separada e mede o desconto.
+**It does not measure** final eligibility. That depends on the full text, which the
+authors only read for the few records that passed screening. The primary target is
+therefore `label_abstract_included`, not `label_included`; the gap between the two is
+reported separately.
 
-## Três coisas que o desenho faz de propósito
+## Three things the design does on purpose
 
-**Seis nouls na mesma requisição.** O `state` é cobrado uma vez, então as cinco facetas
-PI/ECO custam ~36% a mais e entregam o que o JEV não sabe dizer: *por que* excluiu. O JEV
-não gera texto — sem as facetas, a análise de erro não existe.
+**Six nouls in one request.** The `state` is billed once, so the five PI/ECO facets cost
+~36% more and deliver what JEV cannot say: *why* it excluded. JEV generates no text —
+without the facets, error analysis does not exist.
 
-**A pergunta é «vale buscar o texto completo?»**, não «atende aos critérios». As facetas
-são assimétricas: na dúvida, verdadeiro. Excluir exige evidência; incluir não.
+**The question is "is it worth retrieving the full text?"**, not "does it meet the
+criteria". The facets are asymmetric: when in doubt, true. Excluding requires evidence;
+including does not.
 
-**Probabilidade crua no SQLite, nunca booleano.** `noul` devolve 0–1. Todo limiar e toda
-métrica saem daí sem gastar de novo.
+**Raw probabilities in SQLite, never booleans.** `noul` returns 0–1. Every threshold and
+every metric comes out of that without spending again.
 
-## Métricas
+## Declared limitations
 
-`AUC-ROC` (livre de limiar) · `WSS@95` (trabalho poupado a 95% de recall — a métrica da
-área) · `recall@10%/20%/50%` · quanto da lista é preciso triar para achar **todos**.
-Sensibilidade, especificidade, precisão e F1 saem no limiar de operação, escolhido
-**fora-da-dobra** por leave-one-review-out. A 0,8% de prevalência, um classificador que
-diz "não" a tudo tem 99,2% de acurácia — daí as quatro clássicas não bastarem sozinhas.
+- **The set is not what the authors screened; it is the slice that matched in OpenAlex** —
+  32% in `Theobald_2021`, 56% in `Hanlon_2022`, 82% in `Deckers_2022`. And the loss is
+  biased: the pass rate diverges from the published one in opposite directions (Theobald
+  52% against 36% published; Hanlon 18% against 25%).
+- **67% of the corpus has no abstract in OpenAlex**, and the human reviewer almost
+  certainly had one. Every headline metric is reported on the with-abstract slice only.
+- `Theobald_2021` screened on "title, abstract **and keywords**" — a field no model
+  received.
+- DeepSeek's cost was measured through the chat window, with no way to know whether input
+  caching applied; the real range runs from ~US$ 0.016 (cached) to ~US$ 0.05 (full history
+  uncached). Thinking tokens were **49,367**, 8.1× the visible output and 44% of its bill.
+- The prompt files archived in `results/deepseek/` are the **Portuguese originals** used
+  in the experiment. The generator now emits English; the archived files are kept as the
+  record of what was actually sent.
 
-Tudo por revisão, depois **macro-média**. Micro-média deixaria a maior revisão decidir.
+## Reproducing the reranker
 
-## Estado
+Most community GGUF conversions of Qwen3-Reranker are broken with llama.cpp: they are
+plain text-generation conversions, missing the `cls.output.weight` tensor along with
+`qwen3.classifier.output_labels` and `qwen3.pooling_type`. They return meaningless ~1e-22
+scores in no particular order. Six repositories were checked; only
+[Voodisss/Qwen3-Reranker-8B-GGUF-llama_cpp](https://huggingface.co/Voodisss/Qwen3-Reranker-8B-GGUF-llama_cpp)
+was converted with the official `convert_hf_to_gguf.py`. The server also needs
+`--pooling rank --embedding` alongside `--reranking`. See
+[llama.cpp issue #16407](https://github.com/ggml-org/llama.cpp/issues/16407).
 
-Ver `ACHADOS.md` — o que foi medido, o que foi refutado, e a contabilidade de custo.
+## Data and attribution
 
-## Resultado
+Records come from **SYNERGY+ v3.0** (ASReview), CC-BY 4.0 —
+[repository](https://github.com/asreview/synergy-dataset) ·
+[dataverse.nl doi:10.34894/DDCVCV](https://doi.org/10.34894/DDCVCV). Titles and abstracts
+are OpenAlex objects and retain their upstream terms. The files in `results/deepseek/`
+reproduce those fields so the experiment can be replicated.
 
-Ver `resultados/comparacao.md` (comparação dos métodos) e `ACHADOS.md` (o que foi medido,
-o que foi refutado, contabilidade de custo). Resumo, sobre 257 registros com abstract de
-3 revisões:
+The three reviews used as ground truth:
 
-| método | restaram | da lista | % acerto do que entrou | % acerto do que saiu | perdeu | AUC | custo |
-|---|---|---|---|---|---|---|---|
-| JEV `choice` em lote | 115 | 45% | 45,2% | 90,1% | 14 | 0,729 | US$ 0,0086 |
-| DeepSeek V4 Flash | 101 | 39% | 45,5% | 87,2% | 20 | 0,705 | US$ 0,0315 |
-| Qwen3-Reranker 0.6B (local) | 222 | 86% | 29,7% | 100,0% | 0 | 0,592 | US$ 0 |
-| *(os autores)* | *66* | *26%* | *100%* | *100%* | *0* | — | — |
+- Theobald, M. (2021). *Self-regulated learning training programs enhance university
+  students' academic performance, self-regulated learning strategies, and motivation: A
+  meta-analysis.* Contemporary Educational Psychology, 66, 101976.
+  [10.1016/j.cedpsych.2021.101976](https://doi.org/10.1016/j.cedpsych.2021.101976)
+- Hanlon, P., et al. (2022). *Frailty in people with rheumatoid arthritis: a systematic
+  review of observational studies.* Wellcome Open Research, 6, 244.
+  [10.12688/wellcomeopenres.17208.2](https://doi.org/10.12688/wellcomeopenres.17208.2)
+- Deckers, R., & Lago, P. (2022). *Systematic literature review of domain-oriented
+  specification techniques.* Journal of Systems and Software, 192, 111415.
+  [10.1016/j.jss.2022.111415](https://doi.org/10.1016/j.jss.2022.111415)
 
-**«Restaram»** é a coluna que mais separa os três, porque triagem serve para sobrar menos
-artigo. O Qwen devolve 222 dos 257 — tira 14% da lista, e quem recebesse a saída dele leria
-86% do que leria sem ele. Seu 100% de acerto no que descartou e seu zero de perdidos são o
-mesmo fato visto de outro ângulo: ele quase não descarta. DeepSeek e JEV cortam de verdade
-(39% e 45% da lista), e pagam com 20 e 14 estudos perdidos. Nenhum chega aos 26% do humano.
+All three describe title/abstract screening as a stage separate from full-text
+assessment; the quotes are in `FINDINGS.md`.
 
-A AUC das três é de decisão binária — vale (sensibilidade + especificidade)/2, não mede
-ordenação. O Qwen com score contínuo chega a **AUC 0,853**, acima dos outros dois: ele
-ordena bem e decide mal.
+Models evaluated: **Jev 1.13** (TypeSafe) · **DeepSeek V4 Flash** ·
+**Qwen3-Reranker 0.6B and 8B**.
 
-Para calibrar: em `Hanlon_2022` a concordância entre os **dois revisores humanos** foi de
-**kappa 98%**. A distância até o patamar humano não é de ajuste fino.
+## Where things are
 
-## Limitações declaradas
-
-- **O conjunto não é o que os autores triaram, é a fatia que casou no OpenAlex** — 32% em
-  `Theobald_2021`, 56% em `Hanlon_2022`, 82% em `Deckers_2022`. E a perda é enviesada: a
-  taxa de passagem diverge do paper em direções opostas (Theobald 52% contra 36%
-  publicados; Hanlon 18% contra 25%).
-- **67% do corpus não tem abstract no OpenAlex**, e o revisor humano quase certamente o
-  tinha. Toda métrica principal é reportada só na fatia com abstract.
-- `Theobald_2021` triou por "título, abstract **e palavras-chave**" — um campo que não foi
-  enviado a nenhum dos modelos.
-- O custo do DeepSeek foi medido pela janela do chat, sem saber se houve cache de entrada;
-  o intervalo real vai de ~US$ 0,016 (com cache) a ~US$ 0,05 (histórico integral sem).
-
-## Dados e atribuição
-
-Os registros vêm do **SYNERGY+ v3.0** (ASReview), CC-BY 4.0 —
-[repositório](https://github.com/asreview/synergy-dataset) ·
-[dataverse.nl doi:10.34894/DDCVCV](https://doi.org/10.34894/DDCVCV). Títulos e abstracts
-são objetos OpenAlex e mantêm os termos de origem. Os arquivos em `resultados/deepseek/`
-reproduzem esses campos para permitir a réplica do experimento.
-
-Os três papers usados como verdade de referência:
-Theobald (2021) [10.1016/j.cedpsych.2021.101976](https://doi.org/10.1016/j.cedpsych.2021.101976) ·
-Hanlon et al. (2022) [10.12688/wellcomeopenres.17208.2](https://doi.org/10.12688/wellcomeopenres.17208.2) ·
-Deckers & Lago (2022) [10.1016/j.jss.2022.111415](https://doi.org/10.1016/j.jss.2022.111415).
-
-Modelos avaliados: **Jev 1.13** (TypeSafe) · **DeepSeek V4 Flash** ·
-**Qwen3-Reranker 0.6B**.
+`FINDINGS.md` — what was measured, what was refuted, and the cost ledger.
+`results/comparison.md` — the full per-review tables.
