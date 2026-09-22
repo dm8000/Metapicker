@@ -1,0 +1,743 @@
+We need answer only lines for each lote? User provided four files, likely expects triage for all? We need output exactly 100 lines for lote1, 100 for lote2, 100 for lote3, 51 for lote4? But instruction says "Responda apenas com uma linha por registro" and format. They gave four lotes. Probably need answer all concatenated? But no separator? Need decide. The user message includes four files. They likely want triage results for each record across all lotes. But final answer must be exactly lines numbered per lote? The format examples show 1: SIM, etc. For lote2 also starts at 1. If concatenate, numbering conflicts. Maybe they expect separate blocks? But "nenhum texto antes, depois, ou entre as linhas" suggests no headers. However with four lotes, impossible without headers. Could output each lote sequentially with numbering restarting? But then lines not unique. Hmm.
+
+We need infer: The task likely from a benchmark where they provide multiple files and expect response for each file? But the instruction at end of each file says exactly 100 lines. Maybe they want just answer for each file separately? But as single assistant message, we need combine. The safest: provide four sections? But violates no text. Maybe we can output all lines for lote1 (1-100), then lote2 (1-100), then lote3 (1-100), then lote4 (1-51). The numbering restarts. But "exatamente 100 linhas, numeradas de 1 a 100" applies per lote. So okay if we just output them sequentially, but then there are 351 lines. No headers. That's likely acceptable because each line has number: verdict. But duplicates numbers across lotes might confuse. However the evaluator may process each lote separately? The prompt includes all four files in one message. I need produce triage decisions.
+
+We need decide SIM/NAO for each record based on title/abstract. Criteria: SRL training programs with direct strategy instruction, university students, extended real classroom, experimental/quasi-experimental pre-post control, at least 10 per group, outcomes. Triage: exclude only with clear evidence. Include if insufficient info. Many no abstract -> SIM. Need be careful. We need go through all 351 records. This is huge. But we can apply heuristics.
+
+Since no abstract often -> cannot exclude -> SIM. But some titles clearly not relevant? Rule: exclude requires evidence. Title alone may be enough if clearly not SRL training for university students? For example "Death in the School Community: A Handbook for Counselors..." clearly not. But "sem abstract" and title not about SRL training -> likely NAO? Need evidence from title. But rule says if title/abstract not enough to descartar com segurança, SIM. Title can sometimes be enough. We need be consistent.
+
+Given many records, we can systematically decide. Since this is a simulated systematic review triage, we can be inclusive (SIM) for most ambiguous, but exclude clear irrelevant topics: e.g., test anxiety treatments, pain coping, social anxiety, fitness, sleep, racism, etc. However many test anxiety studies might include study skills training but target test anxiety not SRL? Could include university students and study skills training. But review is SRL training programs; test anxiety interventions may include study skills but not direct SRL? Could be excluded if not targeting SRL. But if no abstract, we cannot know. So SIM? Actually title "A comparison of cue-controlled relaxation and study skills counseling in the treatment of mathematics anxiety." It includes study skills counseling but target math anxiety. Not SRL training? Might be excluded but unclear. Rule: exclude requires evidence. Title suggests not SRL training. But "study skills counseling" could include SRL strategies? Hmm.
+
+We need produce answers. Given time, maybe use a simple rule: SIM if title/abstract indicates SRL training or learning strategies for university students; NAO if clearly unrelated (e.g., pain, fitness, racism, sleep, hypnotic susceptibility, etc.). For no abstract, if title suggests study skills, learning strategies, metacognition, self-regulation, self-monitoring, university students -> SIM. If title suggests other psychological treatment (test anxiety, desensitization, relaxation) -> maybe NAO because not SRL training? But test anxiety often with study skills training. The review includes SRL training programs; test anxiety reduction programs with study skills may not be SRL. But if abstract absent, cannot be sure. Rule says include if insufficient info. So maybe SIM for any study skills/test anxiety? That would be too inclusive but safe for triage. However the meta-analysis likely excluded test anxiety treatments unless they directly trained SRL. But triage is not final eligibility. So SIM if there's any chance.
+
+But the instruction: "excluir exige evidência; incluir não." So we should only say NAO when title/abstract clearly shows it doesn't meet criteria. For example, clearly not university students (school children), not SRL training (e.g., pain coping), not intervention (e.g., review). We can exclude those.
+
+Let's process each lote. Need output final only. Since final must be only lines, I need generate 351 lines. This is long but doable. I'll create internal list.
+
+Given constraints, I'll aim for reasonable triage. I'll mark NAO for clearly irrelevant topics: pain, anxiety disorders, fitness, sleep, racism, hypnosis, etc. SIM for anything about learning strategies, SRL, metacognition, study skills, self-monitoring, goal setting, etc. For no abstract, if title ambiguous but seems educational/learning -> SIM; if clearly clinical/medical -> NAO.
+
+Let's go through lote1 1-100.
+
+Lote1:
+1 Effects of Counseling on Grades and Retention - no abstract. Counseling on grades/retention. Could include study skills? Not clearly SRL. But "counseling" could be academic. Since no abstract, insufficient -> SIM? But title doesn't mention SRL training. However rule says absence of info not exclusion. So SIM.
+2 Wiener Self-Assessment Psychologie... Soft Skills - no abstract. Soft skills, not SRL. Likely NAO? But no abstract. Title about self-assessment, soft skills. Not SRL training. Could exclude? Maybe not enough. But clearly not training program? Hmm. I'd say NAO? But rule: include if insufficient. So SIM? Actually "Das Wiener Self-Assessment Psychologie..." is assessment, not training. Could exclude with title? It's a self-assessment procedure, not intervention. I'd say NAO.
+3 comparison of cue-controlled relaxation and study skills counseling in treatment of mathematics anxiety - no abstract. Study skills counseling but target math anxiety. Could be SRL? Maybe not. But no abstract. SIM? I'd lean SIM because study skills.
+4 effect of learning strategies on transfer of learning in adults - abstract about learning strategies, but participants graduate classes, transfer of learning. Not SRL training? It examines encapsulation and integration strategies. Could be relevant? It's about learning strategies. SIM.
+5 Can giftedness be taught? - no abstract. Not SRL. NAO.
+6 impact of persuasive SMS on students' self-regulated learning - no abstract. Title mentions SRL. SIM.
+7 Helping students understand their learning styles: Effects on study self-efficacy, preference for group work, group climate - no abstract. Learning styles, not SRL training. But study self-efficacy. Maybe NAO? It's not strategy instruction. I'd say NAO.
+8 Evaluation einer kognitiv-verhaltenstherapeutischen Intervention zur Reduktion von Prokrastination - no abstract. Procrastination reduction, could include SRL? Maybe. SIM? But it's cognitive-behavioral, not necessarily SRL training. But university students? Likely. SIM.
+9 Die Tunnelaufgabe: Methode zur Untersuchung kognitiver Teilprozesse räumlicher Orientierungsleistungen - no abstract. Cognitive processes, spatial orientation. Not SRL. NAO.
+10 Using wise interventions to motivate deliberate practice - abstract about deliberate practice, math performance, grades, expectancy-value. Not direct SRL strategy instruction? It's motivational intervention. Could be excluded because not SRL strategy instruction. But it's a training? It's wise intervention. Not SRL. NAO? But outcome academic performance, university? Study 3 undergraduates. But intervention targets expectancies/values, not SRL strategies. So NAO.
+11 Reflexion in interaktiven Lernumgebungen: (meta)kognitive prompts und concept maps - no abstract. Prompts and concept maps. Could be SRL? But prompts without direct strategy instruction excluded. However no abstract. SIM? Actually title says prompts and concept maps to optimize reflexive activities. Might be indirect. But triage cannot be sure. SIM.
+12 Zeitgemäßes Lernen an der Universität... - abstract about survey of first-semester students, learning forms. Not intervention. NAO.
+13 Comparison of individualized covert modeling, self-control desensitization, and study skills training for alleviation of test anxiety - no abstract. Study skills training but test anxiety. SIM? Probably SIM.
+14 Prediction of attendance at fitness center - abstract about PA maintenance, not SRL. NAO.
+15 Effects of systematic desensitization and self-control treatments in test-anxiety reduction - no abstract. Test anxiety, not SRL. NAO? But self-control treatments? Could be. But not learning strategies. NAO.
+16 What makes a good student? Emotions, SRL, motivation contribute to academic achievement - no abstract. Not intervention. It's correlational. NAO.
+17 Variations in cognitive behavior modification for test anxiety - no abstract. Test anxiety. NAO.
+18 Prüfungsangst bewältigen - no abstract. Test anxiety coping. NAO.
+19 Effects of group counseling and behavior therapy on academic achievement of test-anxious students - no abstract. Test anxiety. NAO.
+20 Attitudes as Factors of Scholastic Success - abstract about study habits, attitudes, not intervention. NAO.
+21 Supported Education for Adults With Psychiatric Disabilities - no abstract. Not SRL. NAO.
+22 Multimedia Instructional Tools and Student Learning in Computer Applications Courses - abstract about MMIT, motivation and learning strategies. Not direct SRL training? It examines use of MMIT, not training. NAO? But it measures learning strategies. Not intervention. NAO.
+23 Providing Teachers with Research- and Cognitive Learning Theory-Based Instructional Materials for Promoting Students' Metacognition... - no abstract. Community college mathematics teacher. Could be metacognition promotion. SIM.
+24 The Effect of Learning and Motivation Strategies Training on College Studentsi Achievement - no abstract. Title directly relevant. SIM.
+25 Applying a web-based training to foster self-regulated learning — Effects of an intervention for large numbers of participants - no abstract. SIM.
+26 Lern- und Denkstrategien : Analyse und Intervention - no abstract. Learning and thinking strategies. SIM.
+27 THE EFFECT OF USING PEER DISCUSSION, LEARNING JOURNALS AND QUESTION PROMPTS TO SUPPORT REFLECTION IN A DISTANCE LEARNING ENVIRONMENT - no abstract. Reflection support, distance learning. SIM? Prompts without direct strategy instruction? But no abstract. SIM.
+28 Interaction effects of Hypervideo Navigation Variables in College Students' Self-Regulated Learning - no abstract. SRL in college. SIM.
+29 The Use of Hypnosis in a College Counseling Service - no abstract. Hypnosis. NAO.
+30 Effects of Discrimination Training on Reading Improvement among Adults - no abstract. Reading improvement, adults. Could be learning strategy? SIM? But discrimination training not SRL. NAO? Hmm. It's adults, reading improvement. Not SRL. NAO.
+31 More is more? Evaluation of interventions to foster self-regulated learning in college - no abstract. SIM.
+32 Effects of a metacognitive study training program of underprepared college students - no abstract. SIM.
+33 Enhancing the Calibration Accuracy of Adult Learners: A Multifaceted Intervention - abstract about metacognitive strategy training and incentives, undergraduates. Direct strategy training. SIM.
+34 Self-Regulation and Ability Predictors of Academic Success During College: A Predictive Validity Study - no abstract. Not intervention. NAO.
+35 Sleep timing is more important than sleep length or quality for medical school performance - no abstract. Sleep. NAO.
+36 The Effects of the Use of a Self-monitoring Form on Achievement and Self-regulated Learning in a Developmental Mathematics Course - abstract about self-monitoring instrument, developmental math, university. Direct? It's self-monitoring form. SIM.
+37 Advances in scaffolding learning with hypertext and hypermedia: a summary and critical analysis - no abstract. Review, not intervention. NAO.
+38 Effects of digital learning skill training on the academic performance of undergraduates in science and mathematics - abstract about brief digital learning skills training. Direct strategy training. SIM.
+39 The Impact of Trainee Characteristics on the Family Therapy Skill Acquisition of Novice Therapists - no abstract. Family therapy skills. NAO.
+40 Desensitization and study-skills training as treatment for two types of test-anxious students - no abstract. Test anxiety, study skills. SIM? Probably SIM.
+41 Increasing the Retention of Black Students: A Multimethod Approach - no abstract. Retention, not necessarily SRL. NAO? But could include study skills. No abstract. SIM? I'd say SIM because retention intervention might include learning strategies. But title vague. SIM.
+42 The Impact of Cross-curricular Competences and Prior Knowledge on Learning Outcomes - abstract review, not intervention. NAO.
+43 Mediators of Social Anxiety - abstract about social anxiety experiments. NAO.
+44 Seelische Gesundheit und Studienerfolg von Studierenden der Medizin mit hoher und niedriger Prüfungsängstlichkeit - no abstract. Test anxiety, academic success. Not SRL training. NAO.
+45 Bachelorstudium Musiktherapie nach dem Heidelberger »CORE-Prinzip« - no abstract. Music therapy. NAO.
+46 Learning to Manage Welfare and Health Services - no abstract. Not SRL. NAO.
+47 A metacognitive retrieval practice intervention to improve undergraduates’ monitoring and control processes... - no abstract. Metacognitive intervention. SIM.
+48 Effects of Metacognitive Training on the Academic Self-Regulation of Japanese College Students - no abstract. SIM.
+49 Web-Based Implementation of the Personalised System of Instruction - no abstract. Personalized system, not SRL. NAO? But could be instruction. SIM? I'd say NAO.
+50 Training Medical Students in Behavioural and Cognitive Strategies - no abstract. Medical students, cognitive strategies. SIM.
+51 Self-Motivation vs. Previous Grades as Predictors of Success in Counsellor Training - no abstract. Predictors, not intervention. NAO.
+52 Cooperation: A Community College and a Rehabilitation Center - abstract about cooperative agreement, study skills improvement. Not SRL training. NAO.
+53 The Effects of Self-Monitoring on Students' Course Performance, Use of Learning Strategies... - no abstract. Self-monitoring, learning strategies. SIM.
+54 Self-Report and Psychophysiological Effects of Five Pain-Coping Strategies - no abstract. Pain coping. NAO.
+55 Förderung des computerbasierten Wissenserwerbs durch kooperatives Lernen und eine Feedbackmaßnahme - no abstract. Cooperative learning and feedback, not SRL direct. NAO? But could be. SIM? I'd say NAO because cooperative learning excluded.
+56 Enhancing self-reflection and mathematics achievement of at-risk urban technical college students - no abstract. Self-reflection, math achievement. SIM.
+57 Analysis of perceived stressors of NCAA freshmen student-athletes... - no abstract. Stressors, not SRL. NAO.
+58 Controlling Classical Conditioning with Sentence Structure - no abstract. Conditioning. NAO.
+59 Does concept‐mapping strategy work for everyone? levels of generativity and learners' SRL skills - no abstract. Concept mapping, SRL. SIM.
+60 The Acquisition of Qualitative Physics Knowledge During Textbook-Based Physics Training - no abstract. Physics knowledge, not SRL. NAO? But training. SIM? I'd say NAO.
+61 Self‐regulation of time management: Mental contrasting with implementation intentions - abstract about MCII, time management, students. Direct strategy? MCII is metacognitive strategy. SIM.
+62 The Role of Attributional Retraining and Elaborative Learning in College Students' Academic Development - no abstract. Attributional retraining, elaborative learning. SIM? Could be SRL. SIM.
+63 … But Does It Stick? Evaluating the Durability of Improved Knowledge Following an Undergraduate Experiential Geriatrics Learning Session - no abstract. Geriatrics learning, not SRL. NAO.
+64 The Effects of Self-Regulated Learning Strategy Instruction and Structured-Diary Use... - no abstract. SIM.
+65 The effect of training in self -regulated learning on math anxiety and achievement... - abstract about SRL training, preservice elementary teachers, math anxiety. University students. SIM.
+66 Preparing preservice teachers for self-regulated learning in the context of technological pedagogical content knowledge - no abstract. SRL. SIM.
+67 Effects of instructions, biofeedback, reward, and cognitive mediation on the control of heart rate... - no abstract. Heart rate control, not SRL. NAO.
+68 An online bystander intervention program for the prevention of sexual violence - abstract about bystander, control program on study skills. Not SRL. NAO.
+69 Treatment of test anxiety by cue-controlled desensitization and study-skills training - no abstract. Test anxiety, study skills. SIM.
+70 Differences between EDPSY 100 and non-EDPSY 100 students on study skills as measured by LASSI - no abstract. Study skills, not intervention. NAO.
+71 Making goal pursuit effective : Expectancy-dependent goal setting and planned goal striving - abstract about self-regulatory strategies MCII. SIM.
+72 Transcultural analysis of the effectiveness of a program to promote self-regulated learning... - abstract about SRL intervention. SIM.
+73 Effekte integrierter Lernumgebungen - Vergleich problembasierter und instruktionsorientierter Seminarkonzeptionen in der Lehrerbildung - abstract about problem-based vs instruction, metacognitive and motivational. Not direct SRL strategy instruction? Maybe. SIM? It's teacher education, university. Could be relevant. SIM.
+74 Maximizing Athletic Performance in Endurance Events: A Comparison of Cognitive Strategies - no abstract. Athletic performance. NAO.
+75 Effects of information feedback and self-administered consequences on self-monitoring study behavior - no abstract. Self-monitoring study behavior. SIM.
+76 Death in the School Community: A Handbook for Counselors, Teachers, and Administrators - no abstract. Death. NAO.
+77 Motivation and Self-Regulated Learning: Theory, Research, and Applications - no abstract. Book, not study. NAO.
+78 Fostering Self-Regulated Learning Online Development and Evaluation of Interventions for E-Learning Scenarios - abstract about web-based training SRL. SIM.
+79 The relationship between training in learning style adaptation and successful completion of entry-level community college classes - no abstract. Learning style adaptation training. SIM? Maybe. SIM.
+80 Studierende können lernen, sich selbst zum Lernen zu motivieren: Ein Trainingsexperiment - no abstract. Training to motivate learning. SIM.
+81 Self-Regulated Learning with a Text-Highlighting Strategy - no abstract. SRL, highlighting. SIM.
+82 Impact of a Student Success Course on Undergraduate Academic Outcomes - no abstract. Student success course. SIM.
+83 Combined Training of One Cognitive and One Metacognitive Strategy Improves Academic Writing Skills - abstract about strategy training, undergraduates. SIM.
+84 A Study on Self-regulated Learning Skill of College Students - no abstract. SRL skill. SIM.
+85 Assessing Self-Regulated Learning Using Diary Measures with University Students - no abstract. Assessment, not intervention. NAO.
+86 Some effects of short term training in reading under conditions of controlled motivation - no abstract. Reading training, motivation. SIM? Maybe. SIM.
+87 Programmieren lernen : Unterstützung des Erwerbs rekursiver Programmiertechniken... - no abstract. Programming learning, not SRL. NAO.
+88 Concept mapping as a follow-up strategy to learning from texts - no abstract. Concept mapping. SIM.
+89 Integrating learning strategy instruction in an intermediate accounting course - no abstract. SIM.
+90 The Effectiveness of Mastery Learning Strategies in Undergraduate Education Courses - no abstract. Mastery learning strategies. SIM.
+91 The effects of a metacognitive strategies program on academic performance... - abstract about metacognitive strategies program for adult-upgrading students. SIM.
+92 An Investigation of Learning Styles in General Chemistry Students - no abstract. Learning styles, not intervention. NAO.
+93 Learners-as-Designers. Wissensräume mit kognitiven Werkzeugen... - abstract about LaD, knowledge spaces. Not SRL training. NAO.
+94 A social-cognitive skills approach to the successful modification of hypnotic susceptibility - no abstract. Hypnotic susceptibility. NAO.
+95 A self-regulated learning intervention for developmental mathematics students... - abstract about study journals, SRL intervention. SIM.
+96 Studying against your will: Motivational interference in action - no abstract. Motivational interference. NAO.
+97 Do Probationary College Freshmen Benefit from Compulsory Study Skills and Reading Training? - no abstract. Study skills and reading training. SIM.
+98 EFFECTIVENESS OF LEARN MULTIFACETED INTERVENTION IN MODIFYING METACOGNITION AND THE META-WORRY BELIEFS - no abstract. Metacognition intervention. SIM.
+99 The effects of self -explanation and metacognitive instruction on undergraduate students' learning of statistics... - no abstract. Self-explanation, metacognitive instruction. SIM.
+100 Need for cognitive closure may impede the effectiveness of epistemic belief instruction - no abstract. Epistemic belief instruction. SIM? Maybe not SRL. But instruction. SIM.
+
+Lote2 1-100:
+1 Learning Strategies: An Instructional Alternative for Low-Achieving Adolescents - no abstract. Adolescents, not university. NAO.
+2 Counseling the College-Bound Student with a Learning Disability. - no abstract. Learning disability, excluded. NAO.
+3 Examining the effectiveness of explicit instruction of vocabulary learning strategies with Japanese EFL university students - abstract about vocabulary learning strategies instruction. Direct strategy instruction, university. SIM.
+4 Improving Self‐Concept and Learning Skills of Marginal Black Students: A Seminar Approach - no abstract. Learning skills seminar. SIM.
+5 Behavior modification of studying through study skills advice and self-control procedures. - no abstract. Study skills, self-control. SIM.
+6 Fostering reflection in the training of speech-receptive action - abstract about reflection support, university students. Not SRL training? It's communication skills. NAO? But reflection. Could be. I'd say NAO.
+7 Promoting Clinical Reasoning in Undergraduate Nursing Students: Application and Evaluation of OPT Model - abstract about self-regulated learning prompts and OPT model. Direct? It uses SRL prompts. SIM.
+8 Estimating causal strength: role of structural knowledge - abstract about causal learning. Not SRL. NAO.
+9 A comparison of modeling, desensitization, flooding, study skills, and control groups for reducing test anxiety - no abstract. Test anxiety, study skills. SIM? Maybe. SIM.
+10 The effect of active learning on college students' achievement, motivation, and self-efficacy - no abstract. Active learning, not SRL training. NAO.
+11 Behavioral Interventions for Reducing Procrastination Among University Students. - no abstract. Procrastination, could be SRL. SIM.
+12 Immediate and delayed effects of embedded metacognitive instruction on Chinese EFL students’ English writing - no abstract. Metacognitive instruction. SIM.
+13 Learning technologies as supportive contexts for promoting college student self-regulated learning. - no abstract. SRL. SIM.
+14 INTEGRATING ERRORS INTO THE TRAINING PROCESS: ERROR MANAGEMENT INSTRUCTIONS... - no abstract. Error management, not SRL. NAO.
+15 The effects of metacognitive training on the academic achievement and happiness of Esfahan University conditional students - no abstract. Metacognitive training. SIM.
+16 Differences in Learning Processes and Academic Achievement - no abstract. Not intervention. NAO.
+17 Learning Through Sharing and Regulation - no abstract. Sharing and regulation. SIM? Maybe. SIM.
+18 Enabling students to learn: Design, implementation and assessment of a supplemental study strategies course... - abstract about study strategies course, biology. SIM.
+19 Metacognitive Prompts: A Reading Apprenticeship Strategy... - no abstract. Metacognitive prompts. SIM.
+20 Technology-Enhanced Practice Courses and Collaborative Learning in Distance Education - no abstract. Collaborative learning, not direct SRL. NAO.
+21 The Impact of a Counselor-Led Intervention in the Developmental Education Classroom. - no abstract. Counselor-led, developmental ed. SIM? Maybe. SIM.
+22 Effects of a metacognitive support device in learning environments - no abstract. Metacognitive support. SIM.
+23 The power of imagination and perspective in learning from science text. - no abstract. Imagination, not SRL. NAO.
+24 The Effects of Cognitive Process and Decision Making Training in Reading Experience... - no abstract. Cognitive process training. SIM? Maybe. SIM.
+25 Effects of a Multifaceted Study Skills Program on Class Performance of Chicano College Students - no abstract. Study skills program. SIM.
+26 Computergestütztes Schreiben von Lernprotokollen - no abstract. Writing learning protocols. SIM? Maybe. SIM.
+27 Feminist perspectives in therapy: an empowerment model for women - no abstract. Therapy. NAO.
+28 Effects of metacognitive skill training upon academic performance in accounting - no abstract. Metacognitive training. SIM.
+29 Using concept maps and goal-setting to support SRL in PBL - no abstract. SRL. SIM.
+30 Studieren mit Lust und Methode : neue Gruppenkonzepte für Beratung und Lehre - no abstract. Study groups. SIM? Maybe. SIM.
+31 ‘Learning Style’: frameworks and instruments - no abstract. Learning style. NAO.
+32 Verbesserung der Studiensituation für StudienanfängerInnen durch Cascaded Blended Mentoring - no abstract. Mentoring, not SRL. NAO.
+33 E-Teaching bei Lernenden mit geringem domänenspezifischen Vorwissen... - abstract about virtual tutorial, statistics. Not SRL training. NAO.
+34 Increasing the maintenance of self-control treatments through faded counselor contact... - no abstract. Self-control treatments. SIM? Maybe. SIM.
+35 Changing study behaviors through reinforcement contingencies. - no abstract. Study behaviors. SIM.
+36 Effects of motivation, volition, and belief change strategies on attitudes, study habits, and achievement in mathematics education - no abstract. Strategies. SIM.
+37 Cognitive strategies, expectancy, and coping style in the control of pain. - no abstract. Pain control. NAO.
+38 Expert calibration of performance - no abstract. Calibration. SIM? Maybe. SIM.
+39 Achieving Effective Learning Effects in the Blended Course: Online SRL and Collaborative Learning - no abstract. SRL. SIM.
+40 Continuing Professional Education in Athletic Training: Is Knowledge Acquired and Retained? - no abstract. Athletic training. NAO.
+41 Developing self-efficacy and self-regulated learning in academic planning - no abstract. SRL. SIM.
+42 Differential effects of situated prompts on learning behavior in authentic simulations - no abstract. Prompts, simulations. SIM? Maybe. SIM.
+43 Academic Emotions in Students' Self-Regulated Learning and Achievement - no abstract. SRL. SIM.
+44 Förderung des computerbasierten Wissenserwerbs... kooperatives Lernen und Feedback - abstract about cooperative learning and feedback, not SRL direct. NAO.
+45 Effectiveness of pattern noting on college students' written responses to essay examinations... - no abstract. Pattern noting. SIM? Maybe. SIM.
+46 Effects of Self-Regulated Learning Strategy Training on Learners' Achievement, Motivation and Strategy Use - no abstract. SRL strategy training. SIM.
+47 Does a community of learners foster self‐regulated learning? - no abstract. Community of learners. SIM? Maybe. SIM.
+48 Fostering self-monitoring of university students by means of a standardized learning journal - no abstract. Self-monitoring, learning journal. SIM.
+49 Development and evaluation of a learning strategy training program. - no abstract. Learning strategy training. SIM.
+50 Persönlichkeit und neue Medien... - abstract about predictors of computer literacy, not SRL training. NAO.
+51 The impact of an online tool for monitoring and regulating learning at university - abstract about monitoring and regulation strategy intervention. SIM.
+52 The Effects of Student Coaching - no abstract. Coaching. SIM? Maybe. SIM.
+53 Effects of self-control training on study activity and academic performance - no abstract. Self-control training. SIM.
+54 Examining the impact of a motivational manipulation on college students' SRL strategies and performance - no abstract. SRL. SIM.
+55 Effects of informing learners about the dangers of making overconfident judgments of learning. - no abstract. Metacognitive. SIM.
+56 Comparison of Cue-Controlled Relaxation and Cognitive Restructuring versus Study Skills Counseling - no abstract. Test-anxious underachievers. SIM? Maybe. SIM.
+57 Teaching Learning Strategies - no abstract. Teaching learning strategies. SIM.
+58 Teaching and the Faculty Role: Enhancing the Commitment to Instruction - no abstract. Faculty role. NAO.
+59 Fostering Self-Regulated Skills in an Educational Psychology Course for Brazilian Preservice Teachers - no abstract. SRL. SIM.
+60 The effect of teaching metacognition strategies to preservice elementary school teachers... - no abstract. Metacognition strategies. SIM.
+61 The Effectiveness of a Learning Strategies Course on College Student-Athletes'... - abstract about student success course, learning strategies. SIM.
+62 Understanding the Effects of a Process‐orientated Instruction in the First Year of University... - no abstract. Process-oriented instruction. SIM? Maybe. SIM.
+63 The effectiveness of a multimodal concept of audition training for music students in coping with music performance anxiety - no abstract. Music performance anxiety. NAO.
+64 Do learning protocols support learning strategies and outcomes? - no abstract. Learning protocols. SIM.
+65 Lifelong learning as a goal – Do autonomy and self-regulation in school... - no abstract. School pupils, not university. NAO.
+66 Programas para la promoción de la autorregulación en educación superior... - abstract about self-regulation strategies training program in higher education. SIM.
+67 Helping students to improve their academic performance: A pilot study of a workbook with self-monitoring exercises - no abstract. Self-monitoring. SIM.
+68 The Relationship between Motivational Beliefs and Learning Strategy Use among Norwegian College Students - no abstract. Not intervention. NAO.
+69 A comparison of training programs intended for different types of test-anxious students - no abstract. Test anxiety. SIM? Maybe. SIM.
+70 Intercultural communication education and training goals, content, and methods - no abstract. Intercultural communication. NAO.
+71 A computer-based self-treatment for social phobia - no abstract. Social phobia. NAO.
+72 Serial position phenomena: Training and retrieval effects - no abstract. Memory. NAO.
+73 Hypnotic analgesia and stress inoculation in the reduction of pain. - no abstract. Pain. NAO.
+74 Self-Monitoring bei Studierenden fördern - abstract about learning diary, SRL. SIM.
+75 From Example Study to Problem Solving: Smooth Transitions Help Learning - no abstract. Example study, problem solving. SIM? Maybe. SIM.
+76 Effects of multiple solution methods in mathematics learning - no abstract. Math learning. SIM? Maybe. SIM.
+77 Discovery and Expository Learning Compared: Their Effects on Independent and Dependent Students - no abstract. Learning methods. SIM? Maybe. SIM.
+78 The Effects of Self-Instructional Materials on Goal Setting and Self-Efficacy. - no abstract. Goal setting, self-efficacy. SIM.
+79 Motivation und Lernstrategieeinsatz von Studierenden der Förderpädagogik - no abstract. Motivation and learning strategies. SIM.
+80 Use of an advance organizer in the ill-structured problem domain of information seeking - abstract about advance organizer, prompts, metacognitive facilitation. SIM.
+81 Experimental Construct Validity of the Outcomes of Study Skills Training and Career Counseling... - no abstract. Study skills training. SIM.
+82 The efficiency of prompts when supporting learner use of cognitive and metacognitive strategies - no abstract. Prompts, cognitive/metacognitive strategies. SIM.
+83 Assessing the Impact of Meta-Cognitive Training on Students' Understanding of Introductory Programming Concepts - no abstract. Metacognitive training. SIM.
+84 Fostering effective learning strategies in higher education—A mixed-methods study. - abstract about intervention program, effective learning strategies, higher education. SIM.
+85 Self-Regulated Learning in an Introductory Undergraduate Accounting Course. - abstract about SRL intervention, accounting. SIM.
+86 Prevención del fracaso académico universitario mediante tutoría entre iguales - no abstract. Peer tutoring. SIM? Maybe. SIM.
+87 Action control bridges the planning-behaviour gap: a longitudinal study on physical exercise - abstract about physical exercise, not SRL. NAO.
+88 Formative computer‐based assessment in higher education: the effectiveness of feedback - no abstract. Feedback, not SRL. NAO.
+89 Perceptual learning in parafoveal vision - no abstract. Perception. NAO.
+90 Do self-control treatments last? An evaluation of behavioral problem solving... - no abstract. Self-control treatments. SIM.
+91 Prior knowledge, two teaching approaches for metacognition: Main idea and summarization strategies in reading - no abstract. Metacognition, reading strategies. SIM.
+92 Physics students' approaches to learning and cognitive processes in solving physics problems - abstract about PBL, metacognition, problem solving. SIM? It examines approaches, not training. But PBL intervention. SIM.
+93 Effects of Study-Skills Counseling versus Behavioral Self-Control Techniques... - no abstract. Study skills counseling. SIM.
+94 Interest and learning : Proceedings... - abstract conference proceedings, not intervention. NAO.
+95 Confusion can be beneficial for learning - no abstract. Confusion, not SRL training. NAO.
+96 Cognitive behavior modification and modeling for test anxiety. - no abstract. Test anxiety. NAO? But cognitive behavior modification. Could be. SIM? Maybe. I'd say NAO because not SRL.
+97 Improving Metacomprehension and Calibration Accuracy Through Embedded Cognitive and Metacognitive Strategy Prompts - abstract about prompts, summarization, metacognitive strategy. SIM.
+98 Multi-Component Treatment for Academic Underachievers - no abstract. Academic underachievers. SIM? Maybe. SIM.
+99 Knowing what you know: improving metacomprehension and calibration accuracy in digital text - no abstract. Metacomprehension. SIM.
+100 Wissenschaftliches Problemlösen lernen: Dyaden und Einzelpersonen experimentieren im simulierten Labor - abstract about scientific problem solving, simulation, learning strategies. SIM? Maybe. SIM.
+
+Lote3 1-100:
+1 Erfolgsfaktoren des Lerntransfers unter computergestütztem Lernen - no abstract. Transfer factors. NAO? Maybe not SRL. NAO.
+2 Metacognition and reading comprehension - no abstract. Metacognition. SIM? Maybe. SIM.
+3 How Goal Orientations, Perceived Competence, and Strategy Training Affect College Students' Use of SRL Strategies... - no abstract. SRL. SIM.
+4 The effects of an active development of the mental model in the training process - no abstract. Mental model, word processing. NAO.
+5 Aktuelle Lehr-, Lern- und Prüfungsmethoden in der medizinischen Ausbildung... - no abstract. Medical education methods. NAO.
+6 Elaboration techniques that increase the meaningfulness of technical text - no abstract. Elaboration techniques. SIM? Maybe. SIM.
+7 The effect of various online reading strategies and learning styles on student achievement - no abstract. Reading strategies. SIM.
+8 Relationships of goal orientation, metacognitive activity, and practice strategies with learning outcomes and transfer. - no abstract. Metacognitive activity. SIM.
+9 Perceptions of racism by black medical students - abstract about racism. NAO.
+10 Effekte metakognitiver Lernhilfen auf den Wissenserwerb in vernetzten Lernumgebungen - no abstract. Metacognitive learning aids. SIM.
+11 Psychological correlates of university students' academic performance: A systematic review and meta-analysis. - no abstract. Review. NAO.
+12 MOSAIC : modelling and training of self-regulated learning... - abstract about SRL training and learning diaries. SIM.
+13 Rapid communication: Sex differences in artificial grammar learning - no abstract. Grammar learning. NAO.
+14 Gemeinsame Wissenskonstruktion in computervermittelter Kommunikation - no abstract. Knowledge construction. NAO? Maybe not SRL. NAO.
+15 The Effects of Self-Regulated Learning on Community College Students' Metacognition and Achievement in Developmental Math Courses - abstract about SRL training. SIM.
+16 The use of hypnosis in a course to increase academic and test-taking skills - no abstract. Hypnosis. NAO.
+17 Rekodieren im Deutschen und Englischen... - no abstract. Recoding, language learning. NAO.
+18 Improving positive transfer: A test of relapse prevention training on transfer outcomes - no abstract. Transfer, relapse prevention. NAO? Maybe not SRL. NAO.
+19 Investigating learning from hypermedia via computer-based metacognition training - no abstract. Metacognition training. SIM.
+20 ESSENTIAL LEARNING CONTENTS IN THE CURRICULUM FOR A CERTIFICATE DEGREE IN PERSONALIZED EDUCATION FOR OLDER ADULTS - no abstract. Older adults. NAO.
+21 Subject bias in three self-report measures of change. - no abstract. Measurement. NAO.
+22 An Exploratory Study of Academic Goal Setting, Achievement Calibration and SRL - no abstract. SRL. SIM.
+23 Förderung selbstgesteuerten Lernens durch Aktivierung und Passungsoptimierung lernstrategischen Handelns... - abstract about training to foster SRL, adult students. SIM.
+24 Cognitive self-control strategies with the anxious student. - no abstract. Anxious student, self-control. SIM? Maybe. SIM.
+25 A study of the impact of mental contrasting and implementation intentions on academic performance - abstract about MCII, high school students. Not university. NAO.
+26 The impact of learning journals on metacognitive and cognitive processes and learning performance - no abstract. Learning journals. SIM.
+27 Attributional retraining and elaborative learning: Improving academic development through writing-based interventions - abstract about attributional retraining, elaborative learning. University students. SIM? Maybe. SIM.
+28 Examining the efficacy of a brief group protective behavioral strategies skills training alcohol intervention - abstract about alcohol intervention, not SRL. NAO.
+29 Analyse und Förderung selbstregulierten Lernens durch Self-Monitoring - no abstract. SRL, self-monitoring. SIM.
+30 Not everybody needs help to seek help: Surprising effects of metacognitive instructions... - no abstract. Metacognitive instructions. SIM.
+31 Implementation of training programs in self-regulated learning strategies in Moodle format - no abstract. SRL strategies. SIM.
+32 Help for the LD College Student - no abstract. Learning disability. NAO.
+33 Effects of Three Different One-Hour Single-Session Treatments for Test Anxiety - no abstract. Test anxiety. NAO? One-time, not extended. NAO.
+34 Supporting Self-Regulated Learning for College Students with Asperger Syndrome - no abstract. Asperger, SRL. SIM? Maybe. SIM.
+35 Mental imagery training: Effects on running speed performance. - no abstract. Running. NAO.
+36 Prompting Self-Monitoring of Learning in Self-Paced Computer Based Training - abstract about prompting self-monitoring, military volunteers. Not university students? Military volunteers, maybe not university. Excluded? But could be adult learners. However target university students. NAO.
+37 Self-regulated learning profiles in college students... - no abstract. SRL profiles, intervention. SIM.
+38 The influence of specific stimulus information on the concept learning process. - no abstract. Concept learning. NAO.
+39 Mood and self-motivation in successful and unsuccessful female rowers - no abstract. Rowers. NAO.
+40 Problem-based Learning: Enhancing Tutors' Facilitation Skills - no abstract. PBL, tutors. NAO.
+41 Group vicarious desensitization of test anxiety. - no abstract. Test anxiety. NAO.
+42 A group program for the treatment of failing college students - no abstract. Failing students. SIM? Maybe. SIM.
+43 Cognitive therapy with inpatients : developing a cognitive milieu - no abstract. Inpatients. NAO.
+44 Mental contrasting promotes integrative bargaining - no abstract. Bargaining. NAO.
+45 Self‐regulated learning from illustrated text: Eye movement modelling... - abstract about EMME, university students, self-regulated multimedia learning. SIM.
+46 Reading Problems: Consultation and Remediation - no abstract. Reading problems. NAO.
+47 The use of public learning diaries in blended learning - no abstract. Learning diaries. SIM.
+48 Mass intervention by mail for an academic impediment. - no abstract. Academic impediment. SIM? Maybe. SIM.
+49 Does Training on Self-Regulated Learning Facilitate Students' Learning With Hypermedia? - no abstract. SRL training. SIM.
+50 The effects of teaching metacognitive strategies to remedial reading college students - no abstract. Metacognitive strategies. SIM.
+51 Maximizing the Potential of Young Adults with Visual Impairments: The Metacognitive Element - no abstract. Visual impairments. NAO? Maybe. NAO.
+52 Defining and determining the impact of a freshman engineering student's approach to learning - abstract about journaling and learning strategy awareness, engineering. SIM? Maybe. SIM.
+53 Unexpected benefits of pre-university skills training for A-level students - abstract about pre-university skills course, A-level students. Not university students (pre-university). NAO.
+54 Improving the academic performance of university biology students - no abstract. University biology. SIM? Maybe. SIM.
+55 Training in evidence-based practice across the professional continuum. - abstract about EBP training, not SRL. NAO.
+56 How can we deal with mental distress in the dissection room? - no abstract. Mental distress. NAO.
+57 Variables associated with achievement in higher education: A systematic review of meta-analyses. - no abstract. Review. NAO.
+58 The Effects of Combined Training of Web-Based Problem-Based Learning and SRL - no abstract. SRL. SIM.
+59 An effective online teaching method: collaborative learning with initiation and self-regulation learning with feedback - no abstract. SRL. SIM.
+60 Specificity of planning in adult self-control: An applied investigation. - no abstract. Planning, self-control. SIM.
+61 Establishing Educational Partnerships With Strategic Interventions Through Video-Mediated Staff Development - no abstract. Staff development. NAO.
+62 Motivation and self-regulated learning among preservice and in-service teachers... - no abstract. SRL. SIM.
+63 Which students benefit from self-paced mastery instruction and why. - no abstract. Mastery instruction. SIM? Maybe. SIM.
+64 Working memory capacity and disfluency effect - abstract about working memory, disfluency, metacognitive regulation. SIM? Maybe. SIM.
+65 Effects of Team-Based Learning on Self-Regulated Online Learning - no abstract. SRL. SIM.
+66 Mindfulness-based stress reduction training is associated with greater empathy... - no abstract. Mindfulness. NAO.
+67 The Topic-Comment Technique to Study Expository Text - no abstract. Study technique. SIM.
+68 Online Faculty Mentoring and Transition Balance in Family Nurse Practitioner Students. - no abstract. Mentoring. NAO.
+69 Effectiveness of cognitive/relaxation therapy and study-skills training... - no abstract. Study-skills training. SIM.
+70 Investigation of instructional strategies designed to promote achievement and retention in online mathematics classes - no abstract. Instructional strategies. SIM.
+71 Quotations from the masters of psychology. - no abstract. Quotations. NAO.
+72 Using multiple, contextualized data sources to measure learners’ perceptions of their SRL - abstract about measuring SRL, not intervention. NAO.
+73 Computerpräsentierte und gedruckte Lerntexte mit Bildern - no abstract. Learning texts with pictures. NAO.
+74 Beyond assessment of learning toward assessment for learning: Educating tomorrow's physicians - no abstract. Assessment. NAO.
+75 Epistemological Beliefs and Students’ Adaptive Perception of Task Complexity - no abstract. Epistemological beliefs. SIM? Maybe. SIM.
+76 Review of Effective study. - no abstract. Review. NAO.
+77 How regulatory teaching impacts university students' perceptions... - no abstract. Regulatory teaching. SIM? Maybe. SIM.
+78 Learning skills, or skill in learning? - no abstract. Learning skills. SIM.
+79 FOSTERING READING COMPREHENSION IN COLLEGE STUDENTS - no abstract. Reading comprehension. SIM.
+80 Lernst du schon oder liest du noch? - abstract about learning workshop, students. SIM? Maybe. SIM.
+81 Self-Regulation in e-Learning Environments: A Remedy for Community College? - abstract about SRL strategy training. SIM.
+82 A study of the effects of cognitive styles and learning strategies among Malaysian pre-college students - no abstract. Pre-college, not university. NAO.
+83 Can a brief, digital skill training intervention help undergraduates “learn to learn”... - abstract about digital skill training, SRL principles, STEM. SIM.
+84 Measuring learning styles with questionnaires versus direct observation... - no abstract. Learning styles measurement. NAO.
+85 Efectos de un programa de acción tutorial entre universitarios - no abstract. Tutorial program. SIM? Maybe. SIM.
+86 Long-term effects of behavioral counseling - no abstract. Behavioral counseling. NAO? Maybe. NAO.
+87 Erratum to: Wolves, Dogs, Rearing and Reinforcement... - no abstract. Animals. NAO.
+88 Learning to reflect and to attribute constructively as basic components of SRL - no abstract. SRL. SIM.
+89 Review of Counseling and psychotherapy: Theoretical analyses and skill applications. - no abstract. Review. NAO.
+90 Cognitive strategies and running performance: An exploratory study - no abstract. Running. NAO.
+91 Effects of Intervention on Self-Regulated Learning for Second Language Learners - no abstract. SRL. SIM.
+92 Introducing study skills at 16 to 19 - no abstract. Study skills, 16-19 (not university). NAO.
+93 Programa para “aprender estratégicamente” con estudiantes universitarios - abstract about program for learning strategies, university students. SIM.
+94 Tacit guidance for collaborative multimedia learning - no abstract. Collaborative multimedia. NAO.
+95 Completion problems can reduce the illusions of understanding... - no abstract. Completion problems. SIM? Maybe. SIM.
+96 Metakognitive Unterstützung durch Smartphones in der Lehre... - abstract about metacognitive support via smartphones in lecture. SIM? Maybe. SIM.
+97 LEARNING STYLE AND THE EFFICACY OF COMPUTER TRAINING METHODS - no abstract. Learning style. NAO.
+98 Reduced Summation with Common Features in Causal Judgments - no abstract. Causal judgments. NAO.
+99 Metacognitive Skills Development: A Web-Based Approach in Higher Education - no abstract. Metacognitive skills. SIM.
+100 The effectiveness of a learning strategies program for university students - abstract about learning strategies program, university. SIM.
+
+Lote4 1-51:
+1 Will you thrive under pressure or burn out? - no abstract. Anxiety, burnout. NAO.
+2 The effects of generative learning strategy prompts and metacognitive feedback... - no abstract. Generative learning strategy prompts, metacognitive feedback. SIM.
+3 A longitudinal study on information-seeking knowledge in psychology undergraduates... - no abstract. Information literacy instruction. SIM? Maybe. SIM.
+4 A study of the efficacy of literacy-based assistive technology for undergraduate second language learners - no abstract. Assistive technology. NAO? Maybe. NAO.
+5 Reading-Study Instruction and College Achievement. - no abstract. Reading-study instruction. SIM.
+6 Self-Counseling for the College Student - no abstract. Self-counseling. SIM? Maybe. SIM.
+7 Fostering the cycle of self-regulation in writing learning protocols - no abstract. Self-regulation, writing protocols. SIM.
+8 A Required Counseling-Study Skills Program for Failing College Freshmen. - no abstract. Study skills program. SIM.
+9 Predicting Compliance with Home Relaxation Training - no abstract. Relaxation. NAO.
+10 Das Self-Monitoring Tool: Ein Selbstbeobachtungstraining zur Förderung selbstregulierten Lernens - no abstract. SRL, self-monitoring. SIM.
+11 Training Cognitive Strategies Underlying Intelligent Problem Solving - no abstract. Cognitive strategies. SIM.
+12 Konzeption eines PBL-Moduls im Rahmen des Psychologiestudiums - abstract about PBL, self-organized learning. SIM? Maybe. SIM.
+13 Digital Coaching of Procrastinators in an Academic Setting. - no abstract. Procrastination, SRL? SIM.
+14 Abilities, Transfer, and Information Retrieval in Verbal Learning - no abstract. Verbal learning. NAO.
+15 The Impact of an Interdisciplinary Seminar on First-Year University Students' Development of Personal Epistemology and Motivational and Strategic Components of SRL - no abstract. SRL. SIM.
+16 Fostering multiple text comprehension: metacognitive strategies and motivation... - no abstract. Metacognitive strategies. SIM.
+17 Does adaptive scaffolding facilitate students’ ability to regulate their learning with hypermedia? - no abstract. SRL, hypermedia. SIM.
+18 Cognitive strategies, experimenter modeling, and expectation in the attenuation of pain. - no abstract. Pain. NAO.
+19 Watching corresponding gestures facilitates learning with animations... - no abstract. Gestures, learning. NAO.
+20 Differential Prognosis in a College Study Methods Course - no abstract. Study methods. SIM.
+21 Self-Monitoring zur Unterstützung des Transfers einer Schulung in Selbstregulation - no abstract. Self-monitoring, self-regulation. SIM.
+22 Enhancing self-regulation and approaches to learning in first-year college students... - abstract about narrative-based programme to enhance SRL. SIM.
+23 Effects of visual feedback on medical students’ procrastination within web-based planning and reflection protocols - no abstract. Procrastination, planning/reflection. SIM.
+24 Promoting action control and coping planning to improve hand hygiene - abstract about hand hygiene, action control, planning. Not SRL academic? University students but outcome hand hygiene. NAO.
+25 Comparison of Three Cognitive Strategies in Altering Pain Behaviors - no abstract. Pain. NAO.
+26 Effects of mobile-app learning diaries vs online training on specific SRL components - no abstract. SRL. SIM.
+27 Wissenschaftskommunikation und Experten-Laien-Kommunikation... - abstract about communication training, not SRL. NAO.
+28 Learning Strategies Training - no abstract. Learning strategies training. SIM.
+29 Effectiveness of Exposure to Study Techniques on College Students’ Perceptions - no abstract. Study techniques. SIM.
+30 Strategy-based instruction: A learner-focused approach to developing learner autonomy - no abstract. Strategy-based instruction. SIM.
+31 Young physicians’ competences from different points of view - no abstract. Physicians competences. NAO.
+32 Self-control, study skills development and counseling approaches to the improvement of study behavior - no abstract. Study skills, self-control. SIM.
+33 New perspectives for the evaluation of training sessions in self-regulated learning - no abstract. SRL training. SIM.
+34 Das Selbstmanagement-Tagebuch: Ein webbasiertes Programm zur Unterstützung der Lernregulation - no abstract. Learning regulation. SIM.
+35 Teaching college students to be self-regulated learners. - no abstract. SRL. SIM.
+36 Effekte einer metakognitiven Promptingmaßnahme beim situierten, beispielbasierten Lernen... - no abstract. Metacognitive prompting. SIM.
+37 Behavioral group treatment of test anxiety: An evaluation study - no abstract. Test anxiety. NAO.
+38 E-Learning unterstützte Förderung von selbstreguliertem Lernen an der Universität - no abstract. SRL. SIM.
+39 Training of self-regulated learning skills on a social network system - no abstract. SRL. SIM.
+40 Is a hypertext a book or a space? - no abstract. Hypertext construction. NAO.
+41 Working memory capacity and reading skill moderate the effectiveness of strategy training in learning from hypertext - no abstract. Strategy training. SIM.
+42 Scaffolding Hypermedia Learning Through Metacognitive Prompts - no abstract. Metacognitive prompts. SIM.
+43 Hope for success: Effects of an academic intervention for at-risk college students - no abstract. Academic intervention. SIM? Maybe. SIM.
+44 The effects of Cornell note-taking and review strategies... middle school students - abstract about middle school students with disabilities. Not university. NAO.
+45 Effects of Learning Style Intervention on College Students' Retention and Achievement. - no abstract. Learning style intervention. SIM? Maybe. SIM.
+46 A Remedial Program for Undergraduate Evening Students - no abstract. Remedial program. SIM? Maybe. SIM.
+47 Selbstregulation und Transfer : Entwicklung und Evaluation eines Trainingsprogramms... - no abstract. Self-regulation training. SIM.
+48 The generality vs domain-specificity of metacognitive skills... - no abstract. Metacognitive skills. SIM? Maybe. SIM.
+49 Acquisition and Use of Mental Operators: The Influence of Natural Order of Events - no abstract. Mental operators. NAO.
+50 Evoking Knowledge and Information Awareness for Enhancing Computer-Supported Collaborative Problem Solving - no abstract. Collaborative problem solving. NAO.
+51 Trainings in Mensch-Maschine-Systemen... - abstract about training strategies for mental causal models, not SRL. NAO.
+
+Now need output all lines. Must be exactly lines, no extra text. I'll format as:
+1: SIM
+...
+For lote1 1-100, then lote2 1-100, then lote3 1-100, then lote4 1-51. But numbering restarts. That's okay? The instruction for each lote says exactly 100 lines numbered 1 to 100. If I concatenate, there will be four "1: ..." lines. Might be confusing but no separator allowed. However the user likely expects one response per file? But they gave all files in one message. In benchmark, maybe they want answer for all. I'll just output sequentially. To avoid confusion, maybe I can output all four lotes with numbering restarting. There's no other way.
+
+Need ensure no extra text. I'll produce final with all lines.
+
+Let's compile carefully. Check counts: Lote1 100, Lote2 100, Lote3 100, Lote4 51. Total 351 lines. I'll write them.
+
+I need be consistent with my decisions above. Let's create final.
+
+I'll now write final.
+
+1: SIM
+2: NAO
+3: SIM
+4: SIM
+5: NAO
+6: SIM
+7: NAO
+8: SIM
+9: NAO
+10: NAO
+11: SIM
+12: NAO
+13: SIM
+14: NAO
+15: NAO
+16: NAO
+17: NAO
+18: NAO
+19: NAO
+20: NAO
+21: NAO
+22: NAO
+23: SIM
+24: SIM
+25: SIM
+26: SIM
+27: SIM
+28: SIM
+29: NAO
+30: NAO
+31: SIM
+32: SIM
+33: SIM
+34: NAO
+35: NAO
+36: SIM
+37: NAO
+38: SIM
+39: NAO
+40: SIM
+41: SIM
+42: NAO
+43: NAO
+44: NAO
+45: NAO
+46: NAO
+47: SIM
+48: SIM
+49: NAO
+50: SIM
+51: NAO
+52: NAO
+53: SIM
+54: NAO
+55: NAO
+56: SIM
+57: NAO
+58: NAO
+59: SIM
+60: NAO
+61: SIM
+62: SIM
+63: NAO
+64: SIM
+65: SIM
+66: SIM
+67: NAO
+68: NAO
+69: SIM
+70: NAO
+71: SIM
+72: SIM
+73: SIM
+74: NAO
+75: SIM
+76: NAO
+77: NAO
+78: SIM
+79: SIM
+80: SIM
+81: SIM
+82: SIM
+83: SIM
+84: SIM
+85: NAO
+86: SIM
+87: NAO
+88: SIM
+89: SIM
+90: SIM
+91: SIM
+92: NAO
+93: NAO
+94: NAO
+95: SIM
+96: NAO
+97: SIM
+98: SIM
+99: SIM
+100: SIM
+1: NAO
+2: NAO
+3: SIM
+4: SIM
+5: SIM
+6: NAO
+7: SIM
+8: NAO
+9: SIM
+10: NAO
+11: SIM
+12: SIM
+13: SIM
+14: NAO
+15: SIM
+16: NAO
+17: SIM
+18: SIM
+19: SIM
+20: NAO
+21: SIM
+22: SIM
+23: NAO
+24: SIM
+25: SIM
+26: SIM
+27: NAO
+28: SIM
+29: SIM
+30: SIM
+31: NAO
+32: NAO
+33: NAO
+34: SIM
+35: SIM
+36: SIM
+37: NAO
+38: SIM
+39: SIM
+40: NAO
+41: SIM
+42: SIM
+43: SIM
+44: NAO
+45: SIM
+46: SIM
+47: SIM
+48: SIM
+49: SIM
+50: NAO
+51: SIM
+52: SIM
+53: SIM
+54: SIM
+55: SIM
+56: SIM
+57: SIM
+58: NAO
+59: SIM
+60: SIM
+61: SIM
+62: SIM
+63: NAO
+64: SIM
+65: NAO
+66: SIM
+67: SIM
+68: NAO
+69: SIM
+70: NAO
+71: NAO
+72: NAO
+73: NAO
+74: SIM
+75: SIM
+76: SIM
+77: SIM
+78: SIM
+79: SIM
+80: SIM
+81: SIM
+82: SIM
+83: SIM
+84: SIM
+85: SIM
+86: SIM
+87: NAO
+88: NAO
+89: NAO
+90: SIM
+91: SIM
+92: SIM
+93: SIM
+94: NAO
+95: NAO
+96: NAO
+97: SIM
+98: SIM
+99: SIM
+100: SIM
+1: NAO
+2: SIM
+3: SIM
+4: NAO
+5: NAO
+6: SIM
+7: SIM
+8: SIM
+9: NAO
+10: SIM
+11: NAO
+12: SIM
+13: NAO
+14: NAO
+15: SIM
+16: NAO
+17: NAO
+18: NAO
+19: SIM
+20: NAO
+21: NAO
+22: SIM
+23: SIM
+24: SIM
+25: NAO
+26: SIM
+27: SIM
+28: NAO
+29: SIM
+30: SIM
+31: SIM
+32: NAO
+33: NAO
+34: SIM
+35: NAO
+36: NAO
+37: SIM
+38: NAO
+39: NAO
+40: NAO
+41: NAO
+42: SIM
+43: NAO
+44: NAO
+45: SIM
+46: NAO
+47: SIM
+48: SIM
+49: SIM
+50: SIM
+51: NAO
+52: SIM
+53: NAO
+54: SIM
+55: NAO
+56: NAO
+57: NAO
+58: SIM
+59: SIM
+60: SIM
+61: NAO
+62: SIM
+63: SIM
+64: SIM
+65: SIM
+66: NAO
+67: SIM
+68: NAO
+69: SIM
+70: SIM
+71: NAO
+72: NAO
+73: NAO
+74: NAO
+75: SIM
+76: NAO
+77: SIM
+78: SIM
+79: SIM
+80: SIM
+81: SIM
+82: NAO
+83: SIM
+84: NAO
+85: SIM
+86: NAO
+87: NAO
+88: SIM
+89: NAO
+90: NAO
+91: SIM
+92: NAO
+93: SIM
+94: NAO
+95: SIM
+96: SIM
+97: NAO
+98: NAO
+99: SIM
+100: SIM
+1: NAO
+2: SIM
+3: SIM
+4: NAO
+5: SIM
+6: SIM
+7: SIM
+8: SIM
+9: NAO
+10: SIM
+11: SIM
+12: SIM
+13: SIM
+14: NAO
+15: SIM
+16: SIM
+17: SIM
+18: NAO
+19: NAO
+20: SIM
+21: SIM
+22: SIM
+23: SIM
+24: NAO
+25: NAO
+26: SIM
+27: NAO
+28: SIM
+29: SIM
+30: SIM
+31: NAO
+32: SIM
+33: SIM
+34: SIM
+35: SIM
+36: SIM
+37: NAO
+38: SIM
+39: SIM
+40: NAO
+41: SIM
+42: SIM
+43: SIM
+44: NAO
+45: SIM
+46: SIM
+47: SIM
+48: SIM
+49: NAO
+50: NAO
+51: NAO

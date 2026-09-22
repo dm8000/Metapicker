@@ -1,0 +1,1637 @@
+We need answer only lines. Need triage each record across 5 files. Need decide SIM if potentially relevant to systematic review "domain-oriented specification techniques" inclusion/exclusion. We must output exactly 100 lines per lot? User provided 5 files, likely expects combined? Prompt says for each file? Actually user sent 5 files and final instructions? Need parse. They gave five files. We need respond? The initial instruction? They likely expect triage for all records? But "Formato da resposta" per file says exactly 100 lines numbered 1-100 for lot 1, etc. We need produce outputs for all lots? They might want one combined? The last file lot5 says 94 lines. The user probably pasted all five lots; wants answer for each? Need infer. They said [file name]... and content. At end no explicit combined instruction. In these tasks, we should produce triage decisions for all records in each file. Could output separate blocks? But "Responda apenas com uma linha por registro..." applies to each file. However if we output five blocks, includes headings? They said nenhum texto antes, depois, entre linhas. Maybe they expect for each lot separately? The conversation has multiple files. We need likely answer for all lots concatenated? But numbering restarts each lot. If concatenate, 494 lines, numbering restarts causing ambiguity. The final instructions for each file specify 100 lines (or 94). The user might be testing; maybe expects answer for each file in order? Need decide.
+
+We can produce five sets, each exactly lines, but that would have extra newlines between sets? They said no text before/after/entre linhas. Could still separate by blank line? But no text. Hmm.
+
+Maybe the intended is to process all five files and output for each record? The prompt likely from benchmark where they provide multiple files but expect output for all records? In previous tasks, they may include multiple files and ask to answer only lines for each file? The "Formato da resposta" in each file says exactly 100 lines. Since there are 5 lots, perhaps we need output 5 blocks, each block matching each file. But the final answer can contain only lines; if we concatenate, numbering restarts. The evaluator may parse per file? Not sure.
+
+Given complexity, need triage accurately. Let's define criteria.
+
+Review: Systematic literature review of domain-oriented specification techniques. They seek primary studies contributing specification techniques for domain-oriented (DO) specifications, including domain models (DM), DSLs, domain-based specifications, DO integration specs. Exclusion E1: no contribution any specification technique for DO specifications. E2 testing/reviewing/checking specs (but not development creation/maintenance). E3 human behavior/process organization. E4 secondary/tertiary. E5 DS approach doesn't comply with notion of DM as language not framework applications/systems. E6 implementation in target env without explicit DS.
+
+Triage title/abstract. Many no abstract. Rule: if insufficient info to exclude, SIM. Most no abstract => SIM, unless title clearly unrelated, e.g. time-domain/frequency-domain electromagnetic modeling, physical simulation, not specification techniques. But absence abstract not exclusion, but title may provide enough to exclude if clearly about e.g. FDTD modeling, not domain-oriented specification techniques. Need decide. For systematic review about domain-oriented specification techniques, many records are about "domain model" but in different sense (math/physics domain modeling, frequency domain, time domain). We can exclude those clearly not software/specification domain. However if title has "domain model" ambiguous maybe SIM because could be relevant? Need apply.
+
+We need triage each record. The records are from search probably containing "domain model" but many false positives. We need identify likely relevant: those about domain-specific modeling languages, domain models, domain engineering, specification techniques in software/system engineering. Exclude those about time/frequency domain modeling, FDTD, electromagnetic, etc. For no abstract, title enough often to exclude if clearly numerical/electromagnetic etc. But if ambiguous, SIM.
+
+Let's process each lot. Need produce final answer. We can reason here.
+
+We need decide for each record. Could follow strict: include if title/abstract indicate domain-oriented specification techniques (software, requirements, DSL, domain model, metamodel, etc.). Exclude if clearly about another domain (physics/engineering numerical time-domain, frequency-domain). Many no abstract but title "A time-domain seismic SSI..." clearly not relevant. So NAO.
+
+Let's go lot by lot.
+
+Lot 1 (100 records):
+
+[1] Small Signal Frequency-Domain Model of a LCC-HVDC Converter... (sem abstract) -> electrical engineering, not software spec. NAO.
+[2] Virtual Prototyping of LED Applications through Multi-Domain Models... "Industry 4.0" -> engineering multi-domain models, not spec. NAO.
+[3] Fault Diagnosis Method for Substation Grounding Grid... -> NAO.
+[4] Simple conformal methods for FDTD modeling of pressure-release surfaces -> NAO.
+[5] Combined Time and Frequency-Domain Modelling of EM Radiation... -> NAO.
+[6] time-domain seismic SSI analysis... -> NAO.
+[7] improved time-domain response estimation for floating structures... -> NAO.
+[8] Hybrid methodology for situation assessment model development within an air operations center domain (sem abstract) -> could be domain modeling for situation assessment? Maybe software? But "air operations center domain" likely domain model? No abstract. Could be relevant? It is about methodology for situation assessment model development within a domain. Could contribute domain modeling? But unclear. Under include if insufficient? Title includes "domain" but not specification technique. However "model development" in a domain. Might be relevant to domain-oriented specification? Could be situation assessment model. I'd lean NAO? But rule says exclude requires evidence. If title/abstract not enough to discard, SIM. But can we discard? It is not clearly about domain-oriented specification techniques. It is about situation assessment model in air operations. Likely not software specification. But maybe domain model. Hmm. We need be systematic. Many false positives from "domain model" terms. Since review is software engineering, titles about non-software domains should be excluded. "air operations center domain" sounds military domain modeling for situation assessment, not specification technique. NAO.
+[9] fictitious domain method for conformal modeling... FDTD -> NAO.
+[10] Methodology for Zero-moment Point Experimental Modeling in Frequency Domain -> NAO.
+[11] Investigating Relation between Task Model and Domain Model in Task-Based Approach to User Interface Design -> This is software/HCI, domain model in UI design. Could contribute domain modeling? Likely relevant. SIM.
+[12] Method for universal combat platform simulator based on domain component model -> domain component model for simulator, maybe software. Could be relevant? Domain component model could be specification technique? Maybe SIM? Title only. I'd include? It's about combat platform simulator based on domain component model. Could be domain-oriented modeling. SIM.
+[13] time-domain modeling for EM wave propagation in bi-isotropic media TLM -> NAO.
+[14] An ontological conceptualization approach for awareness in domain-independent collaborative modeling systems: Application to a model-driven development method -> This is software modeling, domain-independent collaborative modeling. Could be relevant to domain modeling? It's about ontological conceptualization for awareness, not specification technique for DO specifications. Maybe not. But could contribute modeling. Hmm. E1? It is not a specification technique for DO specs; it's awareness in collaborative modeling. Probably NAO? But it has model-driven development. Need decide. Since review is domain-oriented specification techniques, this may not contribute. But title/abstract no abstract? Actually sem abstract. Can't know. Exclude requires evidence; title says domain-independent collaborative modeling systems. Not domain-oriented. Likely NAO.
+[15] Requirements Enhancement Approach Based on the Problem Domain Model -> clearly relevant. SIM.
+[16] Efficient synthesis technique of time-domain models for interconnects based on FDTD -> NAO.
+[17] A domain engineering approach to specifying and applying reference models -> relevant (domain engineering, specifying). SIM.
+[18] comparison of numerical methods for time domain modelling of pile driving noise -> NAO.
+[19] New inland river channel transit capacity evaluation method based on dynamic quaternion ship domain model -> "ship domain model" not software. NAO.
+[20] Frequency/time-domain modeling of microstrip circuits by modified spectral domain -> NAO.
+[21] A Domain-Specific Language and Editor for Parallel Particle Methods -> DSL, relevant? It contributes a DSL for parallel particle methods. Is it domain-oriented specification technique? It is a DSL, but not for domain-oriented specifications? It is a domain-specific language for scientific computing. The review includes DSLs as specification techniques for DO specifications. Could be relevant? They may include DSLs for specific domains. Yes, DSL for parallel particle methods is a domain-specific language. But is it about domain-oriented specification? Probably in scope if it specifies applications? E5 says exclude if domain as set of systems/applications, interested in domain specification as language. Hmm. DSL for parallel particle methods could be specification technique. Likely SIM? Need triage. I think any domain-specific language paper is potentially relevant, unless clearly about testing etc. So SIM.
+[22] Experience Report on Using a Domain Model-Based Extractive Approach to Software Product Line Asset Development -> relevant domain model based. SIM.
+[23] Methodology to develop domain specific modeling languages -> relevant. SIM.
+[24] Method to Model Input Voltage Ripple in Multi-Domain Fully Integrated Voltage Regulators -> electrical, NAO.
+[25] Research on Multi-domain Modeling and Optimizing Method for Loader Executing System -> engineering multi-domain modeling. NAO.
+[26] The connectivity domain: Analyzing resting state fMRI... -> medical, not software. NAO.
+[27] Piecewise Polynomial Model Reduction Method for Nonlinear Systems in Time Domain -> NAO.
+[28] Applying a Domain Specific Language Approach to Component Oriented Programming -> relevant DSL. SIM.
+[29] A Suitability Measure Approach of Domain Models Based on Semantic Association -> domain models, software. SIM.
+[30] Physical Modelling of Brass Instruments using FDTD -> NAO.
+[31] Frequency Domain Identification of Multivariable Model for Aero-Engine -> NAO.
+[32] A concept mapping case domain modeling approach for digital forensic investigations -> domain modeling for digital forensics, could be relevant? It's domain modeling approach. Could contribute domain-oriented specification? Maybe SIM. It's about case domain modeling. Likely software/knowledge modeling. Include? I'd say SIM.
+[33] An Approach for Automatically Reasoning Consistency of Domain-Specific Modelling Language -> relevant. SIM.
+[34] preliminary study on various implementation approaches of domain-specific language -> relevant DSL. SIM.
+[35] A domain specific language and methodology for control systems GUI specification, verification and prototyping -> relevant DSL/spec. SIM.
+[36] dual-domain mass transfer approach for modeling solute transport... -> NAO.
+[37] An Ontology-Based, Problem-Oriented Requirements Analysis and Domain Modeling Method -> relevant. SIM.
+[38] Application of Multi-domain Unified Modeling Method in Vehicle Performance Simulation -> engineering, NAO.
+[39] synthesis technique of time-domain interconnect models by MIMO adaptive least square -> NAO.
+[40] Harmonic Susceptibility Study of DC Collection Network Based on Frequency Scan and Discrete Time-Domain Modelling -> NAO.
+[41] Business Matter Experts do Matter: A Model-Driven Approach for Domain Specific Process Design and Monitoring -> relevant domain specific process design. SIM.
+[42] Time-domain modelling of thermoacoustic devices: Combining esm and finite-difference -> NAO.
+[43] Pre-designing an electronic card using a multi-domain models approach with DYMOLA -> engineering, NAO.
+[44] Designing a Domain-Specific Contract Language: A Metamodelling Approach -> relevant DSL. SIM.
+[45] Wave-Equation-Based Spatial Finite-Difference Method for EM Time-Domain Modeling -> NAO.
+[46] Novel implicit method for faster modeling of low frequency EM problems in time domain -> NAO.
+[47] Time-domain modeling of nonlinear pulse propagation with FDTD -> NAO.
+[48] Electromagnetic modeling of induced polarization with fictitious wave-domain method -> NAO.
+[49] A Domain Model-Centric Approach for Development of Large-Scale Office Lighting Systems -> domain model centric software? Could be relevant. SIM? It's about development using domain model. Likely SIM.
+[50] Learn and Evolve the Domain model in Intelligent Tutoring Systems: Approach based on Interaction traces -> domain model in ITS, could be relevant? It's about domain model evolution. Maybe SIM. But review is specification techniques. Domain model in ITS is knowledge domain, not software spec? But could be domain modeling. Include? I'd lean SIM because domain model.
+[51] Modeling of Surface Waves in fluid saturated poro-elastic medium... -> NAO.
+[52] An integrated approach to evaluation of domain modeling methods and tools for improvement of code reusability in software development. -> relevant domain modeling methods. SIM.
+[53] 3D Frequency-Domain Elastic Wave Modeling Using Spectral Element Method -> NAO.
+[54] Mathematical foundations of frequency-domain modeling of nonlinear circuits... -> NAO.
+[55] Outline of a method for designing domain-specific modelling languages -> relevant. SIM.
+[56] Domain modeling methods and environments -> relevant. SIM.
+[57] User Story Mapping-Based Method for Domain Semantic Modeling -> domain semantic modeling, software requirements. SIM.
+[58] EMC/EMI problems and diffraction modeling: FDTD vs MoM -> NAO.
+[59] Numerical modelling of transient radiated interferences in time domain by hybrid ARB -> NAO.
+[60] Effect of Domain Shape Modeling and Measurement Errors on 2-D D-Bar Method for EIT -> medical/electrical, NAO.
+[61] Time-domain modeling of high-speed interconnects by modified method of characteristics -> NAO.
+[62] A Systems Approach for Modelling in the Time Domain -> systems? Could be general? "Time Domain" likely engineering. NAO.
+[63] Integrity monitoring of induction machines: frequency domain model-based -> NAO.
+[64] Frequency Domain Approach to Pretest Analysis Model Correlation... -> NAO.
+[65] Application of Advanced Frequency Domain Identification Method for Modelling of Flexible-Link Manipulators -> NAO.
+[66] Modelling metallic discontinuities with non-orthogonal FDTD -> NAO.
+[67] A domain-specific model-based design approach for end-user developers -> relevant DSL/model-based. SIM.
+[68] Extracting reusable design decisions for UML-based domain-specific languages: A multi-method study -> relevant. SIM.
+[69] Domain-specific language models training methodology for in-car infotainment -> relevant DSL. SIM.
+[70] A Domain Specific Language Based Approach for Developing Complex Cloud Computing Applications -> relevant DSL. SIM.
+[71] A V2X Message Evaluation Methodology and Cross-Domain Modelling of Safety Applications... -> engineering/automotive, not spec. NAO.
+[72] Expanding domain method for 3D time-Laplace-domain hybrid modeling -> NAO.
+[73] Processing Metonymy: a Domain-Model Heuristic Graph Traversal Approach -> NLP, not spec. NAO.
+[74] Transient modelling of linear induction launcher-type coil gun... FDTD -> NAO.
+[75] An agent-based approach to rapid software evolution based on a domain model -> relevant. SIM.
+[76] Using free modeling as an agile method for developing domain specific modeling languages -> relevant. SIM.
+[77] A methodology for the development of complex domain specific languages -> relevant. SIM.
+[78] Employing MBSE methodologies to develop a domain specific language for contracting of infrastructure projects -> relevant DSL. SIM.
+[79] An ontological approach to domain modeling for MDA-oriented processes -> relevant. SIM.
+[80] Frequency domain model reduction method for parameter-dependent systems -> NAO.
+[81] Three-dimensional time-domain electromagnetic modelling... -> NAO.
+[82] A time-domain approach for distribution and transmission network modeling -> NAO.
+[83] Accurate Interpolation at Receiver Positions... frequency-domain marine CSEM -> NAO.
+[84] A time-domain model-based method for identification of multi-frequency signal parameters -> NAO.
+[85] A Projection-Based Approach for Development of Domain-Specific Languages -> relevant. SIM.
+[86] Patterns in domain models: methodology... healthcare management domain -> relevant domain models. SIM.
+[87] Frequency domain and finite difference modeling of ventilated concrete slabs... -> NAO.
+[88] Frequency-Domain Nonlinear Modeling Approaches for Power Systems Components -> NAO.
+[89] Quasi-Dynamic Domain Modeling of Line-Commutated Converters -> NAO.
+[90] Alternative Algorithm for Narrowband/Wideband Lorentzian Dispersive Materials Modeling in FDTD -> NAO.
+[91] Robust Time-domain Migration Velocity Analysis Methods... -> NAO.
+[92] Novel Approach for Time-Domain Modeling a Full Anechoic Chamber... -> NAO.
+[93] A domain-specific language for modeling method definition: From requirements to grammar -> relevant. SIM.
+[94] Three-dimensional modeling of frequency- and time-domain electromagnetic methods with IP -> NAO.
+[95] Time Domain Modeling and Simulation of Synchronized Switch Damping... -> NAO.
+[96] Frequency/time-domain modelling of 3D waveguide structures... -> NAO.
+[97] Object-Oriented Comodeling Methodology for Development of Domain Specific DEVS Models -> relevant DSL/domain specific. SIM.
+[98] Time domain modeling of a thin wire... -> NAO.
+[99] The Interactive Domain Model of Best Practices in Health Promotion -> health promotion, not software spec. NAO.
+[100] A general method for FDTD modeling of wave propagation in frequency-dispersive media -> NAO.
+
+Lot 2:
+
+[1] Methodology for a Partly Automated Parameter Identification for the Validation of Multi-Domain Models -> multi-domain engineering, NAO.
+[2] Time-Domain Modelling: Combining ESM and FDTD Methods for Acoustic Wave Propagation -> NAO.
+[3] A time-domain approach to z-domain model identification -> NAO.
+[4] Application of hybrid FDTD to modeling curved surfaces in lithography -> NAO.
+[5] A Metamodel Based Approach for UML Notated Domain Specific Modelling Language -> relevant. SIM.
+[6] The expert system approach in development of loosely coupled software with use of Domain Specific Language -> relevant DSL. SIM.
+[7] A multi-resolution FDTD method for uncertainty quantification... -> NAO.
+[8] Software Domain Model Integration Methodology for Formal Specifications -> relevant. SIM.
+[9] Time-Domain Modeling of Varying Dynamic Characteristics in Thin-Wall Machining... -> NAO.
+[10] Telephony Software Engineering: A Domain-Specific Language Approach -> relevant DSL. SIM.
+[11] Model execution: An approach based on extending domain-specific modeling with action reports -> relevant DSM. SIM.
+[12] Mechatronic System Design Using a Multi-Domain Modeling Approach -> engineering, NAO.
+[13] An approach for the systematic development of domain-specific languages -> relevant. SIM.
+[14] A model transformation framework for domain specific languages: UML and attribute-oriented programming -> relevant. SIM.
+[15] Towards a Domain-Specific Language to Design Adaptive Software: DMLAS -> relevant. SIM.
+[16] METHOD OF DOMAIN MODELS DESIGNING -> relevant. SIM.
+[17] Relating domain model based requirements management and situational method engineering -> relevant. SIM.
+[18] Enhancing UML Models: A Domain Analysis Approach -> relevant. SIM.
+[19] Applying the Application-Based Domain Modeling Approach to UML Structural Views -> relevant. SIM.
+[20] Frequency-domain seismic wave modelling in heterogeneous porous media... -> NAO.
+[21] Knowledge resource allocation oriented domain-specific modeling method -> domain-specific modeling, maybe relevant? It's about knowledge resource allocation oriented DSM. Could be relevant. SIM.
+[22] A Domain Specific Language Approach for Genetic Regulatory Mechanisms Analysis -> DSL for biology. Relevant DSL? Yes, domain-specific language. SIM.
+[23] Approach for an Integrated Multi-Domain Aircraft Energy Model -> engineering, NAO.
+[24] Frequency domain temperature model: on-line temperature estimation for power modules -> NAO.
+[25] Application of the fact-based approach to domain modeling of object-oriented information systems -> relevant. SIM.
+[26] BioDKM: Bio-inspired domain knowledge modeling method for humanoid delivery robots’ planning -> domain knowledge modeling for robotics, could be relevant? It's not specification technique? Could be domain modeling. Maybe SIM? But likely AI planning, not software spec. However domain knowledge modeling is domain-oriented. I'd include? But review is specification techniques. "domain knowledge modeling method" could contribute. SIM maybe.
+[27] Topological UML Modeling: An Improved Approach for Domain Modeling and Software Development -> relevant. SIM.
+[28] Domain Modeling-Based Software Engineering: A Formal Approach -> relevant. SIM.
+[29] An approach to the classification of domain models in support of analogical reuse -> relevant. SIM.
+[30] Time-domain modelling of graded refractive index metamaterials... -> NAO.
+[31] Frequency-domain model reduction approach to design IIR digital filters -> NAO.
+[32] Towards V&V suitable Domain Specific Modeling Languages for MBSE: A tooled approach -> relevant. SIM.
+[33] Using SOC in Development of Context-Aware Systems: Domain Model Approach -> relevant domain model. SIM.
+[34] Parsimonious Finite-volume Frequency-domain Method for 2D P-SV-wave Modelling -> NAO.
+[35] NIF-Based Frequency-Domain Modeling Method of Three-Wire Shielded Energy Cables for EMC -> NAO.
+[36] XML-based method and tool for handling variant requirements in domain models -> relevant. SIM.
+[37] Rapid Frequency Domain Modeling Methods for UAV Flight Control Applications -> NAO.
+[38] A Domain-Oriented, Model-Based Approach for Construction and Verification of Railway Control Systems -> relevant domain-oriented model-based. SIM.
+[39] A Method for Building Domain Requirement Models. -> relevant. SIM.
+[40] Towards Effectiveness Assessment of Domain Modelling Methods and Tools in SPL Development -> relevant. SIM.
+[41] Frequency domain modelling of pipe transient flow with virtual valves -> NAO.
+[42] Building Formal Semantic Domain Model: An Event-B Based Approach -> relevant. SIM.
+[43] Modeling wave propagation in viscoacoustic media: spectral approach in time and space domain -> NAO.
+[44] Time domain model order reduction using Hankel matrix -> NAO.
+[45] Extracting domain models from natural-language requirements -> relevant. SIM.
+[46] Acceleration Techniques for Synthesis and Analysis of Time-Domain Models of Interconnects Using FDTD -> NAO.
+[47] Automating a Domain Model Aware Reengineering Methodology. -> relevant. SIM.
+[48] A Monte Carlo method without grid for a fractured porous domain model -> NAO.
+[49] From Domain Models to Components - A Formal Transformation Approach... -> relevant. SIM.
+[50] Electromagnetic time domain modeling using improved meshless method -> NAO.
+[51] Time-Domain Neural Network Approaches to EM Modeling of Microwave Components -> NAO.
+[52] Rapid Frequency-Domain Modeling Methods for Unmanned Aerial Vehicle Flight Control Applications -> NAO.
+[53] Object--Role Modelling as a Domain Modelling Approach -> relevant. SIM.
+[54] The Finite-Difference Time-Domain Method for Modeling of Seismic Wave Propagation -> NAO.
+[55] Broadband directive sources modeling for acoustic discrete-time domain methods -> NAO.
+[56] Frequency-Domain Numerical Modelling of Visco-Acoustic Waves... -> NAO.
+[57] Anemic Domain Model vs Rich Domain Model to Improve the Two-Hemisphere Model-Driven Approach -> relevant. SIM.
+[58] Legal Cadastral Domain Model: An Object-orientated Approach -> domain model for cadastre, could be relevant? It's an information model. Maybe SIM. It's about domain model, standardisation. Could contribute domain modeling. SIM.
+[59] A finite-element-based domain-decomposition approach for plane wave 3D EM modeling -> NAO.
+[60] A Systematic Approach to Domain-Specific Language Design Using UML -> relevant. SIM.
+[61] A Domain-Specific Language Approach to Protocol Stack Implementation -> relevant DSL. SIM.
+[62] Time-domain model identification method research for aeroengine hydraulic actuator -> NAO.
+[63] Weaving the model web: a multi-modeling approach to concepts and features in domain engineering -> relevant. SIM.
+[64] An Implementation Approach to Achieve Metamodel Independence in Domain Specific Model Manipulation Languages -> relevant. SIM.
+[65] Continuous-discontinuous Galerkin time domain (CDGTD) method with GDM for computational photonics -> NAO.
+[66] Dynamic response of soft soils in high-speed rail foundation: in situ measurements and time domain FEM -> NAO.
+[67] 3D frequency-domain elastic wave modeling with spectral element method... -> NAO.
+[68] The Integrated Domain Modeling: an Approach & Toolset for Acquiring a Topological Functioning Model -> relevant. SIM.
+[69] A Lightweight Approach for Domain-Specific Modeling Languages Design -> relevant. SIM.
+[70] A Domain Model-Driven Approach for Telecom Network Object Platform -> relevant. SIM.
+[71] A MDSD Approach for Adaptable Service Oriented Systems based on Domain Specific Language Engineering -> relevant. SIM.
+[72] Frequency-Domain Modeling and Tustin Discretization Method based Controlling of DC Step-Up Chopper -> NAO.
+[73] Time-domain lifted wavelet collocation method for modeling nonlinear wave propagation -> NAO.
+[74] Hybrid time-domain model for ship motions in nonlinear extreme waves using HOS -> NAO.
+[75] A Mixed-Domain Modeling Method for Microwave Nonlinear Systems and Semiconductor Devices -> NAO.
+[76] An Approach towards Semantic Interoperability using Domain Models -> relevant domain models. SIM.
+[77] Time-domain impedance boundary condition modeling with discontinuous Galerkin for room acoustics -> NAO.
+[78] A domain-specific embedded language approach for scripting of game AI -> relevant DSL. SIM.
+[79] An Active Learning Approach for Improving Accuracy of Automated Domain Model Extraction -> relevant. SIM.
+[80] Research on Virtual Range multi-domain modeling methodology based on Meta-model -> multi-domain simulation, maybe engineering. NAO? Title "Virtual Range" likely simulation. Not spec. NAO.
+[81] 3P. A First Approach to a Domain Specific Language for Constructing Code Generators -> relevant DSL. SIM.
+[82] easyABMS: A domain-expert oriented methodology for agent-based modeling and simulation -> domain-expert oriented methodology, but ABMS. Could be relevant? It's a methodology for agent-based modeling and simulation, not specification technique. Maybe NAO. But domain-oriented? Hmm. It is about modeling and simulation methodology. Not software spec. I'd lean NAO.
+[83] An approach for building generic diagnosis model in agricultural domain -> domain model? Generic diagnosis model. Could be domain modeling for knowledge systems. Maybe SIM? But not software specification. However domain modeling approach. The review includes domain models. It might be relevant. But agricultural diagnosis. Hmm. Exclude? Title insufficient? It says generic diagnosis model in agricultural domain. That's a domain model. Could contribute domain modeling technique. SIM maybe.
+[84] Distribution networks HIF location: A frequency domain system model and WLS parameter estimation -> NAO.
+[85] Methods for task adaptation of acoustic models with limited transcribed in-domain data -> NAO.
+[86] Frequency domain modeling of monopolar HVDC link... -> NAO.
+[87] A domain model for capturing knowledge of the Lean approach -> domain model for Lean, business process. Could be relevant? It is a domain model to capture knowledge. Maybe SIM. But review is specification techniques for DO specifications; domain model for Lean is a domain model. Could be in scope? Possibly. SIM.
+[88] Domain Modeling of Lithium-Rich Manganese Nickel Oxide By Reverse Monte Carlo Method -> material science, NAO.
+[89] Research on Modeling Method of Domain Ontology in Information Extraction -> domain ontology modeling, could be relevant? It's about information extraction. Maybe not spec. But domain ontology. Hmm. NAO? It doesn't contribute specification technique for DO specs; it's modeling domain ontology for information extraction. Likely NAO.
+[90] Managing Health Information System-of-Systems by Engineering Systems Multiple-Domain Modeling Approach -> engineering systems multiple-domain, not spec. NAO.
+[91] Domain model-driven software engineering: A method for discovery of dependency links -> relevant. SIM.
+[92] An approach to build XML-based domain specific languages solutions for client-side web applications -> relevant DSL. SIM.
+[93] Hybrid Electrical/Mechanical Optimization Technique Using Time-Domain Modeling... -> NAO.
+[94] Addressing Multi-Domain Integration Challenge in Robotics using Model-Based Approach -> multi-domain integration in robotics, maybe not spec. NAO? It's model-based, but not domain-oriented specification. Probably NAO.
+[95] A Method of Developing Frequency-Domain Models for Nonlinear Circuits... -> NAO.
+[96] Aspect-oriented domain-specific modeling: a generative approach using a metaweaver framework -> relevant DSM. SIM.
+[97] An On-Demand Model Selection Method Based on O-RGPS Domain Modeling Framework -> domain modeling framework, maybe relevant. SIM.
+[98] Applying the model driven generative domain engineering method to develop self-organizing architectural solutions for mobile robot -> domain engineering, model driven. SIM.
+[99] Mixed-grid and staggered-grid finite-difference methods for frequency-domain acoustic wave modelling -> NAO.
+[100] A New Universal Approach to Time-Domain Modeling and Simulation of UWB Channel... -> NAO.
+
+Lot 3:
+
+[1] Investigating an open methodology for designing domain-specific language collections -> "domain-specific language collections" in education, not software spec. NAO.
+[2] A Krylov enhanced proper orthogonal decomposition method for frequency domain model reduction -> NAO.
+[3] Meshless method with ridge basis functions for two-flow domain model -> NAO.
+[4] Comparison of Iron Loss Models for Electrical Machines... frequency/time domain -> NAO.
+[5] A Domain Specific Embedded Language in C++ for lowest-order methods for diffusive problem... -> relevant DSL. SIM.
+[6] A spectral domain approach to modelling of EM scattering... -> NAO.
+[7] Components Selection Methods for Enterprise Interoperability in Multi Domain Models -> multi-domain models, enterprise interoperability. Could be relevant? Maybe not spec. NAO? It's about components selection, not spec. NAO.
+[8] A frequency-domain propagation model of bypass downlink system... -> NAO.
+[9] A Systematic Testing Approach for Autonomous Mobile Robots Using Domain-Specific Languages -> testing approach, E2? It focuses on testing. Exclude. NAO.
+[10] A Systems Engineering Approach to Development of a Domain-Specific Language for Functional Reference Architectures -> relevant DSL. SIM.
+[11] Unit cell modeling of meander delay line based on FDTD... -> NAO.
+[12] COMPUTER SIMULATION SOFTWARE REUSE BY GENERIC/SPECIFIC DOMAIN MODELING APPROACH -> relevant? Domain modeling for software reuse. SIM.
+[13] Study on Multi-domain Modeling and Optimization Designing Method for Band Sawing Equipment -> engineering, NAO.
+[14] Developing a time-domain finite-element method for modeling of electromagnetic cylindrical cloaks -> NAO.
+[15] Time-domain modeling of scattering from arbitrary cylinders... -> NAO.
+[16] A Layered Approach for Designing Multiple User Interfaces from Task and Domain Models -> relevant domain models in UI. SIM.
+[17] 3D Laplace-domain modeling... -> NAO.
+[18] Service Oriented System design: Domain Specific Model based approach -> relevant. SIM.
+[19] Investigation of explicit finite-element time-domain methods... -> NAO.
+[20] Some problems in model order reduction using frequency-domain methods -> NAO.
+[21] A change domain-based model repair method via Petri nets -> model repair, maybe not spec. E2? It's about repair. Could be checking? Probably NAO.
+[22] Combined Receptor and Ligand-Based Approach to Universal Pharmacophore Model... hERG1 Pore Domain -> medical, NAO.
+[23] A High Order Filter with Galerkin FEM for Spherical Local domain Model -> NAO.
+[24] Strengthening MDE and Formal Design Models by References to Domain Ontologies. A Model Annotation Based Approach -> relevant domain ontologies in MDE. SIM.
+[25] A domain-specific modeling approach for component-based software development -> relevant. SIM.
+[26] Fictitious domain approach for numerical modelling of Navier-Stokes -> NAO.
+[27] A method for requirements elicitation using a domain model -> relevant. SIM.
+[28] A systematic approach to evaluating domain-specific modeling language environments for multi-agent systems -> relevant. SIM.
+[29] A domain model centered approach to spoken language dialog systems -> domain model in dialog systems, could be relevant? It's about spoken language dialog, not software spec. Maybe NAO. But domain model centered approach. Hmm. Likely not specification technique. NAO.
+[30] Supporting Layered Architecture Specifications: A Domain Modeling Approach -> relevant. SIM.
+[31] comparison of finite-difference, finite-integration, integral-equation methods time-domain for GPR -> NAO.
+[32] Harmonic domain approach to STATCOM modelling -> NAO.
+[33] An object-oriented domain analysis and modeling method for software reuse -> relevant. SIM.
+[34] Modeling SPR sensors with FDTD -> NAO.
+[35] A Tool-Supported Methodology for Validation and Refinement of Early-Stage Domain Models -> validation/refinement of domain models. Is this E2 (checking)? It's about validation and refinement, which is development/maintenance? Validation is checking? E2 excludes techniques for testing, reviewing, or checking specifications. This is validation of domain models, likely checking. But it may contribute to creation/maintenance? Hmm. The review looks for creation and maintenance; validation/refinement of domain models might be in scope? E2 excludes testing/reviewing/checking specifications. So probably NAO. But triage: title says validation and refinement of early-stage domain models. Could be excluded by E2. However need full text to know if it contributes specification technique? It's about methodology for validation/refinement, not creation. Likely NAO.
+[36] Handling domain knowledge in system design models. An ontology based approach. -> relevant domain knowledge in system design. SIM.
+[37] Higher Order Time-Domain Finite-Element Method for Microwave Device Modeling -> NAO.
+[38] Method of magnetic domain modeling on a moving magneto-optical disk -> NAO.
+[39] Modelling sub-wavelength ultra-high-Q optical resonators using time domain numerical methods -> NAO.
+[40] Data segmentation algorithms for a time-domain harmonic source modeling method -> NAO.
+[41] A systematic language engineering approach for prototyping domain specific modelling languages -> relevant. SIM.
+[42] UPCaD: A Methodology of Integration Between Ontology-Based Context-Awareness Modeling and Relational Domain Data -> context-awareness and domain data, maybe not spec. NAO? It's about integration of context modeling and relational domain data. Not specification technique. NAO.
+[43] Research on Expression Method of a Unified Constraint Multi-domain Model for Complex Products -> engineering, NAO.
+[44] A practical evaluation of Software Factories and Microsoft Domain Specific Language approach for developing Web Services -> relevant DSL. SIM.
+[45] A Metamodel Composition Driven Approach to Design New Domain Specific Modeling Languages -> relevant. SIM.
+[46] The SysML/KAOS Domain Modeling Approach -> relevant. SIM.
+[47] 3-D Modeling of TDEM Method... geothermal -> NAO.
+[48] An improved wave-vector frequency-domain method for nonlinear wave modeling -> NAO.
+[49] A general approach to defect detection in textured materials using wavelet domain model and level sets -> NAO.
+[50] A time-domain approach for wideband modeling of electronic packages -> NAO.
+[51] Automatic Fault Detection Using a Model-Based Approach in Frequency Domain -> NAO.
+[52] A pessimistic approach to frequency domain model (in)validation -> NAO.
+[53] The PLUSS Approach – Domain Modeling with Features, Use Cases and Use Case Realizations -> relevant. SIM.
+[54] P3G-1 3D Time-Domain Modeling of Nonlinear Medical Ultrasound... -> NAO.
+[55] Improved efficiency of numerical modeling using expanding domain method with logarithmic grid -> NAO.
+[56] Grounded System Dynamics: A Procedure for Underpinning System Dynamics with a Domain Modeling Method -> domain modeling method (ORM) used. Relevant? It's about System Dynamics and ORM. Could be in scope? It's domain modeling method. SIM.
+[57] Research on 3D Modeling Methods of Whole Flow Field Computational Domain of Centrifugal Pumps -> NAO.
+[58] An Unsupervised Multiple Word-Embedding Method with Attention Model for Cross Domain Aspect Term Extraction -> NLP, NAO.
+[59] A domain-specific language for the hybridization and static condensation of finite element methods -> relevant DSL. SIM.
+[60] An Ontology Based Domain-Specific Composable Modeling Method for Complex Simulation Systems -> relevant. SIM.
+[61] Analyzing various topic modeling approaches for Domain-Specific language model -> "Domain-Specific language model" in NLP? Could be about topic modeling for DSL? Title ambiguous. "Domain-Specific language model" likely NLP domain-specific language models, not DSL. NAO? Let's read: "Analyzing various topic modeling approaches for Domain-Specific language model" (sem abstract). Could be about domain-specific language model in NLP. Not specification. NAO.
+[62] A Terminological Approach to Business Domain Modelling -> relevant. SIM.
+[63] 3-D Modeling of Layered Earth Structure... TDEM -> NAO.
+[64] Generation of an adaptive e-learning domain model based on fuzzy logic -> domain model in e-learning. Could be relevant? It's about adaptive e-learning domain model, not software spec. Maybe NAO. But domain model. Hmm. Likely not domain-oriented specification techniques. NAO.
+[65] 3D marine magnetotelluric modeling and inversion with FDTD -> NAO.
+[66] Time-domain and frequency-domain modeling of nonlinear optical components at circuit-level -> NAO.
+[67] New Methods in Ultra-Wideband Array Design and FDTD Modeling of Memristive Devices -> NAO.
+[68] The QDAcity-RE method for structural domain modeling using qualitative data analysis -> relevant domain modeling. SIM.
+[69] Knowledge-based approach to domain modeling: Application to NASA's payload operations control centers -> relevant. SIM.
+[70] From Domain Models to Hypermedia Applications: an Object-Oriented Approach. -> relevant. SIM.
+[71] A Domain Specific Language Approach for Agent-Based Social Network Modeling -> relevant DSL. SIM.
+[72] 2.5-D frequency-domain viscoelastic wave modelling using FEM -> NAO.
+[73] Dynamic analysis of elastoplastic models considering combined formulations of time-domain BEM -> NAO.
+[74] A model fitting approach to baseline distortion in frequency domain analysis of MR spectra -> NAO.
+[75] PREFERENTIAL WATER FLOW IN A FROZEN SOIL — A TWO-DOMAIN MODEL APPROACH -> NAO.
+[76] A simplified approach to time-domain modeling of avalanche photodiodes -> NAO.
+[77] A time-domain approach to model validation -> NAO.
+[78] Study and Application of a Practical Method Based Frequency Domain to Decrease the Rank of Model -> NAO.
+[79] A demonstration-based approach for domain-specific modeling language creation -> relevant. SIM.
+[80] Named Entity Recognition and Normalization: A Domain-Specific Language Approach -> relevant DSL? It's about NER using DSL. Could be in scope? It's a DSL approach for NER, not specification technique for domain-oriented specs. Probably NAO. But it is a DSL. Hmm. The review includes DSLs that are specification techniques for DO specifications. NER DSL might not be. NAO.
+[81] Mid‐domain models of species richness gradients: assumptions, methods and evidence -> ecology, NAO.
+[82] 3D frequency-domain airborne EM forward modelling using spectral element method -> NAO.
+[83] Harmonic balance method applied to numerical electrical physical modelling of two-terminal non-linear microwave circuits in frequency domain -> NAO.
+[84] A MULTISCALE/MULTIDOMAIN MODEL FOR FAILURE ANALYSIS OF MASONRY WALLS -> NAO.
+[85] Frequency-space domain VTI media modeling based on average-derivative optimal method -> NAO.
+[86] Ontology-based approach to decision-making support of conceptual domain models creating and using in learning and scientific research -> relevant domain models. SIM.
+[87] Domain Specific Language Approach on Model-driven Development of Web Services -> relevant DSL. SIM.
+[88] A service-oriented domain specific language programming approach for batch processes -> relevant DSL. SIM.
+[89] Characterization and modeling of multi-conductor transmission line using FDTD -> NAO.
+[90] Cascading verification: an integrated method for domain-specific model checking -> model checking, E2. NAO.
+[91] A domain-specific modeling approach supporting tool-chain development with Bayesian network models -> relevant DSM. SIM.
+[92] Two-Dimensional Discontinuous Galerkin Time-Domain Method for Modeling of Arbitrarily Shaped Power-Ground Planes -> NAO.
+[93] Effective modeling of graphene as conducting sheet in FDTD -> NAO.
+[94] Code Automatic Generation Method for Numeric Control System Based on Domain Modeling -> relevant domain modeling. SIM.
+[95] An Efficient Two-grid Method for a Two-phase Mixed-domain Model of PEMFC -> NAO.
+[96] An Ontological Approach for Domain Knowledge Modeling and Management in E-Learning Systems -> domain knowledge modeling, could be relevant. SIM.
+[97] Goal-oriented adaptive finite element method for time-domain Airborne EM modeling -> NAO.
+[98] An Approach for Automatic Adaptation of Domain-Specific Modeling Languages for Model-Driven Mobile Application Development -> relevant. SIM.
+[99] Advanced modelling of borehole radar environment with FDTD -> NAO.
+[100] A Model Transformation Method in Service-Oriented Domain Modeling -> relevant. SIM.
+
+Lot 4:
+
+[1] A Component Assembly Approach Based On Aspect-Oriented Generative Domain Modeling -> relevant domain modeling. SIM.
+[2] A domain specific language based approach for generating deadlock-free parallel load scheduling protocols for distributed systems -> relevant DSL. SIM.
+[3] A model-based domain-specific language approach for automotive E/E-System design -> relevant DSL. SIM.
+[4] New methods for time-domain modelling of RF/microwave passive structures and active devices -> NAO.
+[5] A time-domain finite element model reduction method for viscoelastic linear and nonlinear systems -> NAO.
+[6] Domain Modeling for Knowledge-Based Systems: An Approach Based on Objects, Events, and Rules -> relevant. SIM.
+[7] Supporting interoperability in complex adaptive enterprise systems: A domain specific language approach -> relevant DSL. SIM.
+[8] Creating FDTD models of commercial GPR antennas using Taguchi optimization -> NAO.
+[9] FDTD modeling of curved material interfaces... -> NAO.
+[10] Domain-specific language approach to modelling UI architecture of mobile telephony systems -> relevant DSL. SIM.
+[11] An efficient high-order multiscale finite element method for frequency-domain elastic wave modeling -> NAO.
+[12] Coupling of a time domain boundary element method to compliant surface models -> abstract actually about donepezil? Weird mismatch. Title numerical BEM. NAO.
+[13] A Knowledge-Based Approach to Generating Target System Specifications from a Domain Model -> relevant. SIM.
+[14] X-Band Waveguide Filter Modeling by UPML RPIM in Time domain -> NAO.
+[15] 2D time-domain acoustic-elastic coupled modeling: cell-based finite-difference -> NAO.
+[16] A multi-domain modelling and verification procedure within MBSE approach to design propulsion systems... -> multi-domain modeling in MBSE, maybe not domain-oriented specification. It's about propulsion systems. NAO? It uses MBSE but not specification technique. Likely NAO.
+[17] A developed nearly analytic discrete method for forward modeling in frequency domain -> NAO.
+[18] A hybrid finite element and integral equation method for time domain modelling of scattering -> NAO.
+[19] Frequency-domain Acoustic Wave Modeling Using Hybrid Direct-iterative Solver -> NAO.
+[20] Multi-domain modeling of distributed energy systems - MOCES -> NAO.
+[21] A New Ontology-Based Approach for Construction of Domain Model -> relevant. SIM.
+[22] Modeling of frequency-domain elastic-wave equation with average-derivative optimal method -> NAO.
+[23] Time Domain Model Order Reduction by Wavelet Collocation Method -> NAO.
+[24] A domain-specific language based approach to component composition, error-detection, and fault prediction -> DSL for component composition, error detection. It includes error-detection and fault prediction, which might be testing/checking? But also component composition, domain model. Could be relevant? E2 excludes testing/reviewing/checking specs. This is about DSL for component composition, error-detection, fault prediction. The core might be composition, not specification. But it uses DSL. Could be included? Hmm. Triage: title indicates DSL approach to component composition, error-detection, fault prediction. This might contribute specification technique? Possibly. But error-detection/fault prediction are testing/checking. However it also covers composition. I'd lean SIM because DSL and domain model. But E2 might exclude. Full text needed. SIM.
+[25] Integration of domain modeling method for families of systems with SOFL formal specification language -> relevant. SIM.
+[26] The novel Vector-Fitting approach for time-domain modeling of propagation on convex obstacles in UWB channels -> NAO.
+[27] Unconditionally stable improved meshless methods for electromagnetic time-domain modeling -> NAO.
+[28] The Onomasiological approach and function of definitions in elaboration of domain models in ontologies -> domain models in ontologies, maybe relevant. SIM.
+[29] A Novel Approach using Alloy in Domain-specific Language Engineering -> relevant. SIM.
+[30] Frequency-Domain Modeling of Multipulse Converters by Double-Fourier Series Method -> NAO.
+[31] Heuristic Approaches for Goal Recognition in Incomplete Domain Models -> AI planning, domain models. Could be relevant? It's about goal recognition, not specification. NAO.
+[32] Efficient Outdoor Sound Propagation Modeling with FDTD: A Review -> review (E4) and not spec. NAO.
+[33] Metadata, Domain Specific Languages and Visualisations as Internal Artifacts Driving an Agile Knowledge Engineering Methodology -> DSLs, knowledge engineering. Could be relevant? It's about agile knowledge engineering, maybe not specification. SIM? It involves DSL. But E3? Agile methodology process. E3 excludes techniques for organizing specification process. This is about methodology. NAO? Hmm. Title: DSLs and visualisations as internal artifacts driving agile knowledge engineering methodology. It may be about process. Probably NAO.
+[34] Transitional Complexity of Health Information System of Systems: Managing by Engineering Systems Multiple-Domain Modeling Approach -> NAO.
+[35] FDTD modeling of finite-sized EM source over periodic structure... -> NAO.
+[36] A multistrategy learning approach to domain modeling and knowledge acquisition -> relevant domain modeling. SIM.
+[37] Modeling of 3-D EM Responses in Frequency domain by Staggeredgrid FDM -> NAO.
+[38] A comparison of two metacompilation approaches to implementing a complex domain-specific language -> relevant DSL. SIM.
+[39] Synthesis of time-domain models for interconnects having 3-D structure based on FDTD -> NAO.
+[40] 7 Frequency-Domain Numerical Modelling of Visco-Acoustic Waves... -> NAO.
+[41] Locally conformal method for acoustic FDTD modeling of rigid surfaces -> NAO.
+[42] Frequency-domain Transfer Matrix Method of 14 Equations Model for Fluid-structure Interaction in Pipes -> NAO.
+[43] Model-Based Control Design of Series Resonant Converter Based on Discrete Time Domain Modelling -> NAO.
+[44] Modeling Passive Mode-Locking via Saturable Absorption in Graphene Using FDTD -> NAO.
+[45] A general approach to hysteresis. Part 4. An alternative formulation of the domain model -> physics domain model, NAO.
+[46] Evaluating Hierarchical Domain-Specific Languages for Computational Science: Applying the Sprat Approach to a Marine Ecosystem Model -> relevant DSL? It's about DSLs in computational science. Could be relevant. SIM.
+[47] Behavioral Domain Analysis — The Application-Based Domain Modeling Approach -> relevant. SIM.
+[48] A process engineering method based on a process domain model and patterns -> process engineering, domain model. Could be relevant? It's about process meta-models. Maybe SIM. It contributes process domain model. But review is domain-oriented specification techniques. Process engineering method. Likely relevant. SIM.
+[49] Effective time-domain antenna modeling based on impulse-matching method -> NAO.
+[50] A model framework-based domain-specific composable modeling method for combat system effectiveness simulation -> relevant DSM. SIM.
+[51] 2D frequency-domain elastic full-waveform inversion using time-domain modeling... -> NAO.
+[52] A Mobility Restriction Authoring Tool Approach based on a Domain Specific Modeling Language and Model Transformation -> relevant DSL. SIM.
+[53] On the specification of extract, transform, and load patterns behavior: A domain-specific language approach -> relevant DSL. SIM.
+[54] Exploring an auxiliary distribution based approach to domain adaptation of a syntactic disambiguation model -> NLP, NAO.
+[55] Three dimensional finite-difference frequency-domain method in modeling of photonic nanocavities -> NAO.
+[56] A network model approach to document retrieval taking into account domain knowledge -> not spec. NAO.
+[57] Modeling and Simulation of Plasmonic Nanoparticles Using FDTD: A Review -> review, NAO.
+[58] A Domain-Specific Language Based Architecture Modeling Approach for Safety Critical Automotive Software Systems. -> relevant DSL. SIM.
+[59] Knowledge-based approach to domain modeling: organizational process modeling application -> relevant. SIM.
+[60] Towards Verifiable Device Drivers: An Approach based on Domain-Specific Languages -> relevant DSL. SIM.
+[61] Towards a Cross-Domain Modeling Approach in System-of-Systems Architectures -> cross-domain modeling, maybe relevant? Could be about architecture modeling. SIM? It's cross-domain modeling in SoS, likely domain-oriented. SIM.
+[62] A declarative approach to cross-domain model analysis -> cross-domain model analysis, maybe checking? E2? It's analysis, not creation. Could be NAO. But might contribute modeling. Hmm. I'd lean NAO? It's about analysis. But title only. Could be relevant to domain modeling. SIM? Need decide. Since review about specification techniques, cross-domain model analysis might be out of scope (analysis). NAO.
+[63] Electromagnetic transient studies of large distribution systems using frequency domain modeling methods... -> NAO.
+[64] Instructional Design Rationale with QOC: a Model Driven Engineering and Domain Specific Modeling Approach -> relevant DSM. SIM.
+[65] Frequency Domain Modelling by Direct-Iterative Solver: Space and Wavelet Approach -> NAO.
+[66] Frequency-space domain high-order modeling based on average-derivative optimal method -> NAO.
+[67] Building Applications with Domain-Specific Markup Languages: A Systematic Approach to Development of XML-Based Software -> relevant DSL. SIM.
+[68] A Mixin-Based, Semantics-Based Approach to Reusing Domain-Specific Programming Languages -> relevant DSL. SIM.
+[69] A method to support dynamic domain model based on user interests for effective language learning -> domain model in language learning, not spec. NAO.
+[70] A Generative Development Method with Multiple Domain-Specific Languages -> relevant DSL. SIM.
+[71] Frequency-Domain Modeling of Nonlinear Power System Devices: Quasi-Sinusoidal Volterra -> NAO.
+[72] The Online Market Observatory: A Domain Model Approach -> domain model for market observatory, not spec. NAO.
+[73] A synthesis technique of time-domain interconnect models by MIMO selective orthogonal least-square -> NAO.
+[74] An Approach for Supporting Aspect-Oriented Domain Modeling -> relevant. SIM.
+[75] Estimated Frequency Domain Model Uncertainties used in Robust Controller Design -> NAO.
+[76] Z-domain modeling approach of multilayer sextuple-coupled micro-ring resonator... -> NAO.
+[77] Fast simulation approaches for power fluctuation model of wind farm based on frequency domain -> NAO.
+[78] ENHANCING THE SYSTEM DYNAMICS MODELING PROCESS WITH A DOMAIN MODELING METHOD -> relevant domain modeling. SIM.
+[79] Weighted Laguerre Polynomials-Finite Difference Method for Time-Domain Modeling of Thin Wire Antennas -> NAO.
+[80] A knowledge-based approach for generating target system specifications from a domain model -> relevant. SIM.
+[81] Application of Hidden Markov Model based methods for gaining insights into protein domain evolution and function -> biology, NAO.
+[82] Domain Model-Centric Distributed Development: An approach to semantics-based change impact management -> relevant. SIM.
+[83] Towards Robust OSes for Appliances: A New Approach Based on Domain-Specific Languages -> relevant DSL. SIM.
+[84] A general approach to hysteresis. Part 3.—A formal treatment of independent domain model of hysteresis -> physics, NAO.
+[85] Domain Model Evolutionary Approach Based on Semantic Association -> relevant. SIM.
+[86] Domain Model Driven Approach to Change Impact Assessment -> relevant. SIM.
+[87] Orchestration of Domain Specific Test Languages with a Behavior Driven Development approach -> testing, E2. NAO.
+[88] DSP approach for time-domain modelling of wave-propagation in source-free frequency-dependent materials -> NAO.
+[89] 3D numerical modeling of induced-polarization EM response based on FDTD -> NAO.
+[90] Time-Domain Modeling of Short Pulses Radiation with Aperture Decomposition Method -> NAO.
+[91] Fast frequency-domain 2D elastic-wave modeling using Schur complement-based FDM -> NAO.
+[92] Integral-Equation Method for S-Domain Modeling of Rectangular Waveguides... -> NAO.
+[93] Time-Domain Electromagnetic Scattering by Buried Dielectric Objects... GPR -> NAO.
+[94] SIMULATION METHODS OF MULTI-DIMENSIONAL NONSTATIONARY STOCHASTIC PROCESSES BY TIME DOMAIN MODELS -> NAO.
+[95] Embedded boundary methods for modeling 3D finite-difference Laplace-Fourier domain acoustic-wave equation -> NAO.
+[96] A Domain-oriented Model Mapping Method Based on XMI -> relevant. SIM.
+[97] Robust estimation of fractional models in frequency domain using set membership methods -> NAO.
+[98] Hybrid TLM and multipole expansion method for time-domain modeling of radiating structures -> NAO.
+[99] Comparison of solution approaches for two-domain model of nonequilibrium transport in porous media -> NAO.
+[100] A dynamic thermal modelling of solar panels using frequency-domain method -> NAO.
+
+Lot 5 (94 records):
+
+[1] A method to improve structural modeling based on conserved domain clusters -> biology, NAO.
+[2] A Domain Specific Modeling Approach for Coordinating User-Centric Communication Services -> relevant DSM. SIM.
+[3] Finite element methods for Helmholtz equation in exterior domain: Model problems -> NAO.
+[4] Analysis of Nonlinear Metallic Metasurface Elements Using Maxwell-Hydrodynamic Model With Time-Domain Perturbation Method -> NAO.
+[5] Development of numerical models of vertical ground heat exchangers... (French) -> not English, NAO. Also domain decomposition. NAO.
+[6] Efficient Modeling of Time-domain AEM using Finite-volume Method -> NAO.
+[7] New Approach for Conversational Agent Definition by Non-Programmers: A Visual Domain-Specific Language -> relevant DSL. SIM.
+[8] Time domain modeling of soft faults in wiring system by nodal Discontinuous Galerkin... -> NAO.
+[9] A finite element multifrontal method for 3D CSEM modeling in frequency domain -> NAO.
+[10] High-efficiency design method of LLC resonant converter... based on time-domain model -> NAO.
+[11] Signal-Processing Approach to Robust Time-Domain Modeling of Electromagnetic Fields -> NAO.
+[12] Newmark method for FDTD modeling of wave propagation in frequency-dispersive medium -> NAO.
+[13] A Novel Method Based on Source Domain Understanding and Modeling to Transfer Labels... -> remote sensing, NAO.
+[14] Towards domain specific modeling approach in early warning system. -> domain specific modeling, could be relevant. SIM.
+[15] A Model Driven Approach to domain standard specifications examplified by Finance Accounts receivable/Accounts payable -> relevant. SIM.
+[16] Multiple domain integral equation method for 3D EM modeling in complex geoelectrical structures -> NAO.
+[17] The development of efficient numerical time-domain modeling methods for geophysical wave propagation -> NAO.
+[18] Systematic and Formal Approach to get a Domain Specific Language -> relevant. SIM.
+[19] Design for Proof: An Approach to the Design of Domain-Specific Languages -> relevant. SIM.
+[20] Strong ground motion estimation... time domain modeling -> NAO.
+[21] A domain-specific language approach to hybrid cps modelling -> relevant DSL. SIM.
+[22] Towards Using Ontologies for Domain Modeling within SysML/KAOS Approach -> relevant. SIM.
+[23] A Model-Based Approach to Families of Embedded Domain-Specific Languages -> relevant. SIM.
+[24] Nonlinear stability of the one-domain approach to modelling convection in superposed fluid and porous layers -> NAO.
+[25] First experiences with High Resolution Imagery Based Adjudication Approach for Social Tenure Domain Model in Ethiopia -> domain model in land administration, not software spec. NAO.
+[26] A MODEL-DRIVEN APPROACH TO THE INTEGRATION OF PRODUCT MODELS INTO CROSS-DOMAIN ANALYSES -> model-driven cross-domain analysis, maybe not spec. NAO? It's about product models integration. Not domain-oriented specification. NAO.
+[27] A relaxation approach for time domain modelling of sound propagation in porous media -> NAO.
+[28] Korean title: 시간영역에서의 다중 입력-출력시스템의 모드매개변수 추정방법 (A Time Domain Model Parameter Estimation Method for Multiple Input-Output Systems) -> not English? Korean title, maybe not English. NAO.
+[29] Hybrid Time-and-Frequency-Domain approach for modeling photonic integrated circuits -> NAO.
+[30] 2D Frequency-domain Seismic Wave Modeling in VTI Media Based on Hp-adaptive DG -> NAO.
+[31] A Model-Driven Method for Service-Oriented Modeling and Design Based on Domain Ontology -> relevant. SIM.
+[32] Reusable component design method based on domain business model -> relevant domain business model. SIM.
+[33] Numerical Modeling of GPR Using Spectral-element Method in Time Domain -> NAO.
+[34] A Domain-Specific Modeling approach for supporting specification of Visual Instructional Design Languages and building dedicated editors -> relevant DSM. SIM.
+[35] An Approach for Mapping Domain-Specific AOM Applications to a General Model -> domain-specific AOM, relevant? It's about adaptive object models, not specification technique. Maybe SIM? Title indicates domain-specific AOM applications to general model. Could be relevant to domain modeling. SIM? I'd lean SIM because domain-specific modeling.
+[36] A Domain Oriented Approach for Network Software Requirement Modeling -> relevant. SIM.
+[37] Research of Transactions Goods Domain Ontology Building Method Based on Reputation Recommendation Trust Model -> domain ontology building, e-commerce. Could be relevant? It's domain ontology, but not specification technique. Maybe NAO. But domain modeling. Hmm. Likely not software spec. NAO.
+[38] 3-D frequency-domain seismic wave modelling in heterogeneous, anisotropic media using Gaussian quadrature grid -> NAO.
+[39] Three-dimensional finite element modeling of skeletal muscle using two-domain approach -> NAO.
+[40] A domain-specific language approach to programmable networks -> relevant DSL. SIM.
+[41] Component Reuse from Domain Models: a Knowledge-Based Approach -> relevant. SIM.
+[42] State-space integral-equation method for S-domain modeling of planar circuits on semiconducting substrates -> NAO.
+[43] Time Domain Modelling of Nonlinear Hydroelastic Problems for Sea Ice... -> NAO.
+[44] A domain model-driven approach for producing user interfaces to multi-platform information systems -> relevant. SIM.
+[45] Frequency-Domain Modeling and Simulation of DC Power Electronic Systems Using Harmonic State Space Method -> NAO.
+[46] A GENERALIZED RESIDUALS MODEL FOR UNIFIED MATRIX POLYNOMIAL APPROACH TO FREQUENCY DOMAIN MODAL PARAMETER ESTIMATION -> NAO.
+[47] CPS Modeling of CNC Machine Tool Work Processes Using an Instruction-Domain Based Approach -> instruction-domain modeling, not spec. NAO.
+[48] Time-Domain Modeling and Simulation of Partial Discharge on Medium-Voltage Cables by Vector Fitting -> NAO.
+[49] A 3-D Radial Point Interpolation Method for Meshless Time-Domain Modeling -> NAO.
+[50] REPRESENTING FIRE EMERGENCY RESPONSE KNOWLEDGE THROUGH A DOMAIN MODELLING APPROACH -> domain modeling approach for emergency response. Could be relevant? It's domain modeling for knowledge representation, not software spec. But it contributes domain model. Maybe SIM. The review is about domain-oriented specification techniques. This is domain modeling approach. I'd include? Possibly. SIM.
+[51] Towards a Multi-Domain Model-Driven Traceability Approach -> multi-domain model-driven traceability, maybe relevant? It's about traceability, not specification. NAO? But model-driven. Could be in scope? Traceability is not creation/maintenance. NAO.
+[52] A logic based approach to use case based requirement verification and domain model improvement -> verification/improvement of domain model. E2? It's verification. NAO.
+[53] Model reduction using impulse-response gramians: frequency-domain approach -> NAO.
+[54] Towards a Domain Specific Language for a Goal-Oriented approach based on KAOS -> relevant DSL. SIM.
+[55] Towards a Methodology for Semantics Specification of Domain-specific Models through Properties -> relevant. SIM.
+[56] Semantic Approach to Verifying Activity Diagrams with a Domain Specific Language -> verification, E2. NAO.
+[57] A mixed-domain modeling method for RF systems -> engineering, NAO.
+[58] DOMAIN SPECIFIC LANGUAGE IN TECHNICAL SOLUTION DOCUMENTS - Discussion of Two Approaches to Improve Semi-automated Annotation -> DSL in documents, annotation. Not spec. NAO.
+[59] 3D acoustic modelling and waveform inversion in Laplace domain... -> NAO.
+[60] Forward Modeling of VTI Media in Frequency-Space Domain... -> NAO.
+[61] Specification, Implementation, and Verification of Domain Specific Languages: A Logic Programming-Based Approach -> relevant, though verification. It's about DSL spec/implementation/verification. Could be included? E2 excludes testing/reviewing/checking specifications, but this is verification of DSLs. Might be out. However title suggests contribution to DSL specification. SIM? I'd include because it's about DSL.
+[62] An approach to architecture-centric domain-specific modelling and implementation for software development and reuse. -> relevant. SIM.
+[63] A software re-engineering method using domain models -> relevant. SIM.
+[64] Designing Domain Specific Languages – A Craftsman’s Approach for Railway Domain Using Casl -> relevant. SIM.
+[65] Modeling Graphene in FDTD Using Surface Boundary Condition -> NAO.
+[66] Modeling and simulation of Ultrasonic Guided Waves propagation in fluid-structure domain by monolithic approach -> NAO.
+[67] A Laplace Domain Modelling Approach for CM Active EMI Filters -> NAO.
+[68] Research and Application on Feature-Oriented Domain Modeling Method -> relevant. SIM.
+[69] A SOA Approach for Domain-Specific Language Implementation -> relevant DSL. SIM.
+[70] Domain Modeling Approaches in IS Engineering -> relevant. SIM.
+[71] Three-Dimensional Transient Electromagnetic Modeling Based on Fictitious Wave Domain Methods -> NAO.
+[72] S-domain modeling of conducting post in rectangular waveguides by BI-RME -> NAO.
+[73] Research on a domain specific language constructing method based on objects -> relevant DSL. SIM.
+[74] Quality of Care Domain Modeling in Cancer: A Semantic Approach. -> domain modeling in healthcare. Could be relevant? It's domain modeling. SIM.
+[75] Modeling and formulation of microperforated panels in FDTD -> NAO.
+[76] Topographic Modeling for Time-domain AEM Systems Using Finite Element Method -> NAO.
+[77] A combined time and frequency domain method for model reduction of discrete systems -> NAO.
+[78] Application of DCIM in Time Domain PEEC Modeling -> NAO.
+[79] Implementing a Domain Specific Embedded Language for lowest-order variational methods with Boost Proto -> relevant DSL. SIM.
+[80] River Quality Modeling: Frequency Domain Approach -> NAO.
+[81] An Efficient Method for Creating Requirement Specification of Plant Control Software Using Domain Model -> relevant. SIM.
+[82] A Model Driven Domain Engineering Method -> relevant. SIM.
+[83] A massively parallel time-domain discontinuous Galerkin method for 3D elastic wave modeling -> NAO.
+[84] Time-Domain Modelling: Combining ESM and a Finite-Difference Method for Thermoacoustic Devices -> NAO.
+[85] An Optimization Approach for Matching Textual Domain Models with Existing Code -> relevant. SIM.
+[86] Digital lattice filter design using a frequency domain modeling approach -> NAO.
+[87] Applying the B formal method to the Bossa domain-specific language -> relevant DSL. SIM.
+[88] Validating Methods in Cognitive Engineering: A Comparison of Two Work Domain Models -> validation of work domain models, not software spec. NAO.
+[89] Incorporating Effective Media in FDTD for Spherical Nanoparticle Modeling -> NAO.
+[90] Finite-difference time-domain method for modelling seismic wave propagation in viscoelastic media -> NAO.
+[91] Time-to-Frequency Domain SMPS Model for Harmonic Estimation -> NAO.
+[92] Application of Order Reduction Methods in Multi-Domain Modelling of Mechatronic Systems -> NAO.
+[93] Source excitation methods for FDTD modeling of circuits and devices -> NAO.
+[94] A New Approach for Modeling Correlated Gaussian Errors using Frequency Domain Overbounding -> NAO.
+
+Now need final answer. But issue: output format. If I output all five lots sequentially, numbering restarts. The instruction says for each file exactly 100 lines etc. I can output five blocks. But they said "nenhum texto antes, depois, ou entre as linhas — sem explicação, sem resumo." So I cannot add headings like "Lote 1". But if I just concatenate, there will be 100 lines then next line "1: ..." again. That's ambiguous but maybe acceptable if they process as multiple files? The final answer expected by user might be combined? Since they provided five files and each has its own format, likely they want five sets. But the platform may expect one message. I can output all lines for all lots, with numbering restarting at 1 for each lot. There is no separator. But the line "1: SIM" appears multiple times. That might be okay if they know order of files. However "exatamente 100 linhas" per file means total 494 lines. I'll do that.
+
+Need ensure no blank lines? They said no text between lines. I can put each line consecutive. But if I include five blocks, there is no blank line. The first line of lot2 is "1: SIM", immediately after lot1 line 100. That's fine.
+
+Let's compile decisions. Need be careful with each lot's count.
+
+Lot 1 decisions list (100):
+1 NAO
+2 NAO
+3 NAO
+4 NAO
+5 NAO
+6 NAO
+7 NAO
+8 NAO
+9 NAO
+10 NAO
+11 SIM
+12 SIM
+13 NAO
+14 NAO
+15 SIM
+16 NAO
+17 SIM
+18 NAO
+19 NAO
+20 NAO
+21 SIM
+22 SIM
+23 SIM
+24 NAO
+25 NAO
+26 NAO
+27 NAO
+28 SIM
+29 SIM
+30 NAO
+31 NAO
+32 SIM
+33 SIM
+34 SIM
+35 SIM
+36 NAO
+37 SIM
+38 NAO
+39 NAO
+40 NAO
+41 SIM
+42 NAO
+43 NAO
+44 SIM
+45 NAO
+46 NAO
+47 NAO
+48 NAO
+49 SIM
+50 SIM
+51 NAO
+52 SIM
+53 NAO
+54 NAO
+55 SIM
+56 SIM
+57 SIM
+58 NAO
+59 NAO
+60 NAO
+61 NAO
+62 NAO
+63 NAO
+64 NAO
+65 NAO
+66 NAO
+67 SIM
+68 SIM
+69 SIM
+70 SIM
+71 NAO
+72 NAO
+73 NAO
+74 NAO
+75 SIM
+76 SIM
+77 SIM
+78 SIM
+79 SIM
+80 NAO
+81 NAO
+82 NAO
+83 NAO
+84 NAO
+85 SIM
+86 SIM
+87 NAO
+88 NAO
+89 NAO
+90 NAO
+91 NAO
+92 NAO
+93 SIM
+94 NAO
+95 NAO
+96 NAO
+97 SIM
+98 NAO
+99 NAO
+100 NAO
+
+Check 12: "Method for universal combat platform simulator based on domain component model" maybe SIM. I set SIM.
+14: I set NAO. Could be SIM? But okay.
+32: SIM.
+50: SIM.
+62: NAO.
+73: NAO.
+86: SIM.
+
+Lot 2 decisions (100):
+1 NAO
+2 NAO
+3 NAO
+4 NAO
+5 SIM
+6 SIM
+7 NAO
+8 SIM
+9 NAO
+10 SIM
+11 SIM
+12 NAO
+13 SIM
+14 SIM
+15 SIM
+16 SIM
+17 SIM
+18 SIM
+19 SIM
+20 NAO
+21 SIM
+22 SIM
+23 NAO
+24 NAO
+25 SIM
+26 SIM
+27 SIM
+28 SIM
+29 SIM
+30 NAO
+31 NAO
+32 SIM
+33 SIM
+34 NAO
+35 NAO
+36 SIM
+37 NAO
+38 SIM
+39 SIM
+40 SIM
+41 NAO
+42 SIM
+43 NAO
+44 NAO
+45 SIM
+46 NAO
+47 SIM
+48 NAO
+49 SIM
+50 NAO
+51 NAO
+52 NAO
+53 SIM
+54 NAO
+55 NAO
+56 NAO
+57 SIM
+58 SIM
+59 NAO
+60 SIM
+61 SIM
+62 NAO
+63 SIM
+64 SIM
+65 NAO
+66 NAO
+67 NAO
+68 SIM
+69 SIM
+70 SIM
+71 SIM
+72 NAO
+73 NAO
+74 NAO
+75 NAO
+76 SIM
+77 NAO
+78 SIM
+79 SIM
+80 NAO
+81 SIM
+82 NAO
+83 SIM
+84 NAO
+85 NAO
+86 NAO
+87 SIM
+88 NAO
+89 NAO
+90 NAO
+91 SIM
+92 SIM
+93 NAO
+94 NAO
+95 NAO
+96 SIM
+97 SIM
+98 SIM
+99 NAO
+100 NAO
+
+Check 21: SIM. 22: SIM. 26: SIM. 82: NAO. 83: SIM. 87: SIM.
+
+Lot 3 decisions (100):
+1 NAO
+2 NAO
+3 NAO
+4 NAO
+5 SIM
+6 NAO
+7 NAO
+8 NAO
+9 NAO
+10 SIM
+11 NAO
+12 SIM
+13 NAO
+14 NAO
+15 NAO
+16 SIM
+17 NAO
+18 SIM
+19 NAO
+20 NAO
+21 NAO
+22 NAO
+23 NAO
+24 SIM
+25 SIM
+26 NAO
+27 SIM
+28 SIM
+29 NAO
+30 SIM
+31 NAO
+32 NAO
+33 SIM
+34 NAO
+35 NAO
+36 SIM
+37 NAO
+38 NAO
+39 NAO
+40 NAO
+41 SIM
+42 NAO
+43 NAO
+44 SIM
+45 SIM
+46 SIM
+47 NAO
+48 NAO
+49 NAO
+50 NAO
+51 NAO
+52 NAO
+53 SIM
+54 NAO
+55 NAO
+56 SIM
+57 NAO
+58 NAO
+59 SIM
+60 SIM
+61 NAO
+62 SIM
+63 NAO
+64 NAO
+65 NAO
+66 NAO
+67 NAO
+68 SIM
+69 SIM
+70 SIM
+71 SIM
+72 NAO
+73 NAO
+74 NAO
+75 NAO
+76 NAO
+77 NAO
+78 NAO
+79 SIM
+80 NAO
+81 NAO
+82 NAO
+83 NAO
+84 NAO
+85 NAO
+86 SIM
+87 SIM
+88 SIM
+89 NAO
+90 NAO
+91 SIM
+92 NAO
+93 NAO
+94 SIM
+95 NAO
+96 SIM
+97 NAO
+98 SIM
+99 NAO
+100 SIM
+
+Check 12: "COMPUTER SIMULATION SOFTWARE REUSE BY GENERIC/SPECIFIC DOMAIN MODELING APPROACH" I set SIM.
+29: NAO.
+35: NAO.
+42: NAO.
+56: SIM.
+61: NAO.
+64: NAO.
+74: NAO.
+80: NAO.
+90: NAO.
+
+Lot 4 decisions (100):
+1 SIM
+2 SIM
+3 SIM
+4 NAO
+5 NAO
+6 SIM
+7 SIM
+8 NAO
+9 NAO
+10 SIM
+11 NAO
+12 NAO
+13 SIM
+14 NAO
+15 NAO
+16 NAO
+17 NAO
+18 NAO
+19 NAO
+20 NAO
+21 SIM
+22 NAO
+23 NAO
+24 SIM
+25 SIM
+26 NAO
+27 NAO
+28 SIM
+29 SIM
+30 NAO
+31 NAO
+32 NAO
+33 NAO
+34 NAO
+35 NAO
+36 SIM
+37 NAO
+38 SIM
+39 NAO
+40 NAO
+41 NAO
+42 NAO
+43 NAO
+44 NAO
+45 NAO
+46 SIM
+47 SIM
+48 SIM
+49 NAO
+50 SIM
+51 NAO
+52 SIM
+53 SIM
+54 NAO
+55 NAO
+56 NAO
+57 NAO
+58 SIM
+59 SIM
+60 SIM
+61 SIM
+62 NAO
+63 NAO
+64 SIM
+65 NAO
+66 NAO
+67 SIM
+68 SIM
+69 NAO
+70 SIM
+71 NAO
+72 NAO
+73 NAO
+74 SIM
+75 NAO
+76 NAO
+77 NAO
+78 SIM
+79 NAO
+80 SIM
+81 NAO
+82 SIM
+83 SIM
+84 NAO
+85 SIM
+86 SIM
+87 NAO
+88 NAO
+89 NAO
+90 NAO
+91 NAO
+92 NAO
+93 NAO
+94 NAO
+95 NAO
+96 SIM
+97 NAO
+98 NAO
+99 NAO
+100 NAO
+
+Check 24: SIM. 33: NAO. 48: SIM. 61: SIM. 62: NAO. 82: SIM.
+
+Lot 5 decisions (94):
+1 NAO
+2 SIM
+3 NAO
+4 NAO
+5 NAO
+6 NAO
+7 SIM
+8 NAO
+9 NAO
+10 NAO
+11 NAO
+12 NAO
+13 NAO
+14 SIM
+15 SIM
+16 NAO
+17 NAO
+18 SIM
+19 SIM
+20 NAO
+21 SIM
+22 SIM
+23 SIM
+24 NAO
+25 NAO
+26 NAO
+27 NAO
+28 NAO
+29 NAO
+30 NAO
+31 SIM
+32 SIM
+33 NAO
+34 SIM
+35 SIM
+36 SIM
+37 NAO
+38 NAO
+39 NAO
+40 SIM
+41 SIM
+42 NAO
+43 NAO
+44 SIM
+45 NAO
+46 NAO
+47 NAO
+48 NAO
+49 NAO
+50 SIM
+51 NAO
+52 NAO
+53 NAO
+54 SIM
+55 SIM
+56 NAO
+57 NAO
+58 NAO
+59 NAO
+60 NAO
+61 SIM
+62 SIM
+63 SIM
+64 SIM
+65 NAO
+66 NAO
+67 NAO
+68 SIM
+69 SIM
+70 SIM
+71 NAO
+72 NAO
+73 SIM
+74 SIM
+75 NAO
+76 NAO
+77 NAO
+78 NAO
+79 SIM
+80 NAO
+81 SIM
+82 SIM
+83 NAO
+84 NAO
+85 SIM
+86 NAO
+87 SIM
+88 NAO
+89 NAO
+90 NAO
+91 NAO
+92 NAO
+93 NAO
+94 NAO
+
+Check 37: NAO. 50: SIM. 51: NAO. 56: NAO. 61: SIM. 74: SIM. 85: SIM.
+
+Now final output. Need ensure no extra text. I'll output all lines. Since there are 5 lots, total lines 100+100+100+100+94 = 494. I'll just write them consecutively. But there's no separator, so line 1 of lot2 appears after line 100 of lot1. That's okay.
+
+Let's compose final carefully.
+
+1: NAO
+2: NAO
+3: NAO
+4: NAO
+5: NAO
+6: NAO
+7: NAO
+8: NAO
+9: NAO
+10: NAO
+11: SIM
+12: SIM
+13: NAO
+14: NAO
+15: SIM
+16: NAO
+17: SIM
+18: NAO
+19: NAO
+20: NAO
+21: SIM
+22: SIM
+23: SIM
+24: NAO
+25: NAO
+26: NAO
+27: NAO
+28: SIM
+29: SIM
+30: NAO
+31: NAO
+32: SIM
+33: SIM
+34: SIM
+35: SIM
+36: NAO
+37: SIM
+38: NAO
+39: NAO
+40: NAO
+41: SIM
+42: NAO
+43: NAO
+44: SIM
+45: NAO
+46: NAO
+47: NAO
+48: NAO
+49: SIM
+50: SIM
+51: NAO
+52: SIM
+53: NAO
+54: NAO
+55: SIM
+56: SIM
+57: SIM
+58: NAO
+59: NAO
+60: NAO
+61: NAO
+62: NAO
+63: NAO
+64: NAO
+65: NAO
+66: NAO
+67: SIM
+68: SIM
+69: SIM
+70: SIM
+71: NAO
+72: NAO
+73: NAO
+74: NAO
+75: SIM
+76: SIM
+77: SIM
+78: SIM
+79: SIM
+80: NAO
+81: NAO
+82: NAO
+83: NAO
+84: NAO
+85: SIM
+86: SIM
+87: NAO
+88: NAO
+89: NAO
+90: NAO
+91: NAO
+92: NAO
+93: SIM
+94: NAO
+95: NAO
+96: NAO
+97: SIM
+98: NAO
+99: NAO
+100: NAO
+1: NAO
+2: NAO
+3: NAO
+4: NAO
+5: SIM
+6: SIM
+7: NAO
+8: SIM
+9: NAO
+10: SIM
+11: SIM
+12: NAO
+13: SIM
+14: SIM
+15: SIM
+16: SIM
+17: SIM
+18: SIM
+19: SIM
+20: NAO
+21: SIM
+22: SIM
+23: NAO
+24: NAO
+25: SIM
+26: SIM
+27: SIM
+28: SIM
+29: SIM
+30: NAO
+31: NAO
+32: SIM
+33: SIM
+34: NAO
+35: NAO
+36: SIM
+37: NAO
+38: SIM
+39: SIM
+40: SIM
+41: NAO
+42: SIM
+43: NAO
+44: NAO
+45: SIM
+46: NAO
+47: SIM
+48: NAO
+49: SIM
+50: NAO
+51: NAO
+52: NAO
+53: SIM
+54: NAO
+55: NAO
+56: NAO
+57: SIM
+58: SIM
+59: NAO
+60: SIM
+61: SIM
+62: NAO
+63: SIM
+64: SIM
+65: NAO
+66: NAO
+67: NAO
+68: SIM
+69: SIM
+70: SIM
+71: SIM
+72: NAO
+73: NAO
+74: NAO
+75: NAO
+76: SIM
+77: NAO
+78: SIM
+79: SIM
+80: NAO
+81: SIM
+82: NAO
+83: SIM
+84: NAO
+85: NAO
+86: NAO
+87: SIM
+88: NAO
+89: NAO
+90: NAO
+91: SIM
+92: SIM
+93: NAO
+94: NAO
+95: NAO
+96: SIM
+97: SIM
+98: SIM
+99: NAO
+100: NAO
+1: NAO
+2: NAO
+3: NAO
+4: NAO
+5: SIM
+6: NAO
+7: NAO
+8: NAO
+9: NAO
+10: SIM
+11: NAO
+12: SIM
+13: NAO
+14: NAO
+15: NAO
+16: SIM
+17: NAO
+18: SIM
+19: NAO
+20: NAO
+21: NAO
+22: NAO
+23: NAO
+24: SIM
+25: SIM
+26: NAO
+27: SIM
+28: SIM
+29: NAO
+30: SIM
+31: NAO
+32: NAO
+33: SIM
+34: NAO
+35: NAO
+36: SIM
+37: NAO
+38: NAO
+39: NAO
+40: NAO
+41: SIM
+42: NAO
+43: NAO
+44: SIM
+45: SIM
+46: SIM
+47: NAO
+48: NAO
+49: NAO
+50: NAO
+51: NAO
+52: NAO
+53: SIM
+54: NAO
+55: NAO
+56: SIM
+57: NAO
+58: NAO
+59: SIM
+60: SIM
+61: NAO
+62: SIM
+63: NAO
+64: NAO
+65: NAO
+66: NAO
+67: NAO
+68: SIM
+69: SIM
+70: SIM
+71: SIM
+72: NAO
+73: NAO
+74: NAO
+75: NAO
+76: NAO
+77: NAO
+78: NAO
+79: SIM
+80: NAO
+81: NAO
+82: NAO
+83: NAO
+84: NAO
+85: NAO
+86: SIM
+87: SIM
+88: SIM
+89: NAO
+90: NAO
+91: SIM
+92: NAO
+93: NAO
+94: SIM
+95: NAO
+96: SIM
+97: NAO
+98: SIM
+99: NAO
+100: SIM
+1: SIM
+2: SIM
+3: SIM
+4: NAO
+5: NAO
+6: SIM
+7: SIM
+8: NAO
+9: NAO
+10: SIM
+11: NAO
+12: NAO
+13: SIM
+14: NAO
+15: NAO
+16: NAO
+17: NAO
+18: NAO
+19: NAO
+20: NAO
+21: SIM
+22: NAO
+23: NAO
+24: SIM
+25: SIM
+26: NAO
+27: NAO
+28: SIM
+29: SIM
+30: NAO
+31: NAO
+32: NAO
+33: NAO
+34: NAO
+35: NAO
+36: SIM
+37: NAO
+38: SIM
+39: NAO
+40: NAO
+41: NAO
+42: NAO
+43: NAO
+44: NAO
+45: NAO
+46: SIM
+47: SIM
+48: SIM
+49: NAO
+50: SIM
+51: NAO
+52: SIM
+53: SIM
+54: NAO
+55: NAO
+56: NAO
+57: NAO
+58: SIM
+59: SIM
+60: SIM
+61: SIM
+62: NAO
+63: NAO
+64: SIM
+65: NAO
+66: NAO
+67: SIM
+68: SIM
+69: NAO
+70: SIM
+71: NAO
+72: NAO
+73: NAO
+74: SIM
+75: NAO
+76: NAO
+77: NAO
+78: SIM
+79: NAO
+80: SIM
+81: NAO
+82: SIM
+83: SIM
+84: NAO
+85: SIM
+86: SIM
+87: NAO
+88: NAO
+89: NAO
+90: NAO
+91: NAO
+92: NAO
+93: NAO
+94: NAO
+95: NAO
+96: SIM
+97: NAO
+98: NAO
+99: NAO
+100: NAO
+1: NAO
+2: SIM
+3: NAO
+4: NAO
+5: NAO
+6: NAO
+7: SIM
+8: NAO
+9: NAO
+10: NAO
+11: NAO
+12: NAO
+13: NAO
+14: SIM
+15: SIM
+16: NAO
+17: NAO
+18: SIM
+19: SIM
+20: NAO
+21: SIM
+22: SIM
+23: SIM
+24: NAO
+25: NAO
+26: NAO
+27: NAO
+28: NAO
+29: NAO
+30: NAO
+31: SIM
+32: SIM
+33: NAO
+34: SIM
+35: SIM
+36: SIM
+37: NAO
+38: NAO
+39: NAO
+40: SIM
+41: SIM
+42: NAO
+43: NAO
+44: SIM
+45: NAO
+46: NAO
+47: NAO
+48: NAO
+49: NAO
+50: SIM
+51: NAO
+52: NAO
+53: NAO
+54: SIM
+55: SIM
+56: NAO
+57: NAO
+58: NAO
+59: NAO
+60: NAO
+61: SIM
+62: SIM
+63: SIM
+64: SIM
+65: NAO
+66: NAO
+67: NAO
+68: SIM
+69: SIM
+70: SIM
+71: NAO
+72: NAO
+73: SIM
+74: SIM
+75: NAO
+76: NAO
+77: NAO
+78: NAO
+79: SIM
+80: NAO
+81: SIM
+82: SIM
+83: NAO
+84: NAO
+85: SIM
+86: NAO
+87: SIM
+88: NAO
+89: NAO
+90: NAO
+91: NAO
+92: NAO
+93: NAO
+94: NAO
+quantos tokens deu tudo?
+
+We need answer user asks in Portuguese: "quantos tokens deu tudo?" They provided huge files and our previous answer. We need respond. Need count tokens? We need estimate? We don't have tokenizer. Need answer likely about total tokens of everything? They want how many tokens all gave. We can estimate based on content. Need be careful. We are AI, no actual tokenizer access maybe can estimate. Need perhaps compute approximate tokens. The entire prompt includes 5 files with 100/100/100/100/94 records plus instructions. Our previous answer 494 lines? Actually lot1 100, lot2 100, lot3 100, lot4 100, lot5 94 = 494 lines. They ask "quantos tokens deu tudo?" likely total tokens of all provided content? We need answer in Portuguese. Could provide approximate. Need maybe calculate.
+
+We can estimate token count. We have access to text in prompt. Need count tokens for entire conversation? They ask "tudo" could mean all files + my response? We can say não tenho tokenizer exato, mas estimativa. We can compute rough by characters/words. We can count approximate. Let's calculate.
+
+We have five markdown files. Each has same header and criteria repeated (~900 words?) plus records. Need estimate total tokens.
+
+Let's estimate systematically.
+
+OpenAI tokenization: English ~4 chars per token, Portuguese ~4 chars? Markdown and numbers. Token ~0.75 words. We can approximate.
+
+Total input content: 5 files. Each file has header and criteria (same) plus records. Need count tokens per file.
+
+Header/criteria repeated: Let's count roughly. The header and criteria text:
+
+"# Triagem de revisão sistemática — Deckers_2022, lote X de 5
+
+Você é um revisor fazendo triagem de título e abstract para a revisão sistemática
+abaixo. Para cada registro, decida se ele deve ser recuperado para leitura de texto
+completo.
+
+Esta não é a decisão final de elegibilidade. A pergunta é: vale a pena buscar o artigo
+inteiro para avaliá-lo?
+
+Regra da triagem — importante: excluir exige evidência; incluir não. Se o título e o
+abstract não trazem informação suficiente para descartar o registro com segurança, o
+veredicto é SIM. Muitos registros não têm abstract; a ausência de informação não é
+motivo de exclusão.
+Revisão
+
+Systematic literature review of domain-oriented specification techniques
+Critérios de elegibilidade
+
+Inclusion criteria.
+We run our search queries on Google Scholar, because it covers all well-known scientific publication sources, like ACM, Springer, and IEEE. Our inclusion criteria are:
+(I1) Research publications subject to scientific peer review. Studies that were not submitted to scientific peer review might have claims that are not objectively verified on credibility. So, journal papers, PhD theses, and papers in conference or workshop proceedings, are considered. Also books and technical reports issued by respected institutes or authors are taken into account. But white papers, or articles in commercial magazines, are discarded.
+(I2) Studies written in English.
+(I3) Studies available online as full text. Exceptions can be made for well-known books on the subject.
+Exclusion criteria.
+The exclusion criteria are:
+(E1) Studies that do not contribute any specification technique for DO specifications, which includes DMs, DSLs, domain-based specifications, and DO integration specifications. For example, we exclude studies in which specifications, like requirements or DSL definitions, are only used as an example, while they do not explain how to make them.
+(E2) Studies that focus on techniques for testing, reviewing, or checking specifications. We are looking for techniques in the context of system development, i.e., the creation and maintenance of domain-oriented specifications.
+(E3) Studies that focus on techniques for human behavior or on how to organize the specification process. For example, SCRUM prescribes the specification of all work items, but it does not address how to specify them or how to apply them correctly.
+(E4) Secondary and tertiary studies (e.g., systematic literature reviews, surveys, etc.). It is important to note that, though secondary studies are excluded, we may use them for precisely scoping the contribution of this SLR and for checking the completeness of the set of selected primary studies.
+(E5) Studies that describe an approach for creating a DS and that do not comply with our notion of DM as explained in Section 2.1. As such we exclude studies that consider a domain as a set of systems or applications. We are interested in studies that see a domain specification as a language, and not as a framework to specify applications and systems. Of course, we will include a study if parts of it offer specification techniques that do comply with our notion of DM.
+(E6) Studies that mainly focus on implementing DSs in a target environment without using an explicit DS of that environment. Transformation specifications from a source DS to a target DS are in scope. But transformations from a source domain to program code, without an explicit DS of the targeted software environment, are excluded.
+Registros (N)"
+
+That's about 600 words? Let's count: Portuguese paragraph ~70 words, English criteria ~350 words. Total ~420 words. Tokens ~550. With markdown. Let's say 600 tokens per header. 5 headers = 3000 tokens.
+
+Records: each record has title and maybe abstract. Titles average 10 words ~13 tokens. Abstract if present average maybe 150 words ~200 tokens. Many no abstract. In lot1, about 18 with abstracts? Let's count. But overall total maybe lot1: titles 100*15=1500; abstracts: some. Lot1 has abstracts for records: 3,26,30,36,40,41,43,51,53,55,56,70,71,73,76,77,81,86,88,94,95? Let's not exact. Many. But total content length given is huge. Need approximate tokens.
+
+Maybe we can estimate by file size in characters. The prompt is around 100k characters? Let's approximate. Each lot: 100 records. If each record average 50 tokens (title + abstract maybe) = 5000 tokens per lot. Header 600 => 5600. 5 lots ~28000 tokens. Plus our response 494 lines: each line "1: SIM" ~3 tokens. 494*3 = 1482 tokens. Total ~30k tokens. But maybe abstracts are longer, some records have long abstracts (e.g., lot1 #30 long, #36, #56, #70, #76, #77, #94; lot2 #10, #11, #15, #49, #56, #65, #77, #78, #79, #87; lot3 #1, #5, #13, #36, #44, #46, #47, #56, #59, #60, #63, #87, #91, #95, #96; lot4 #1, #5, #12, #16, #24, #29, #32, #43, #48, #56, #60, #67, #82, #83, #90, #93; lot5 #2, #5, #7, #10, #12, #15, #16, #21, #25, #26, #27, #35, #38, #39, #43, #47, #50, #52, #55, #58, #62, #64, #66, #79, #87, #94). Long abstracts add tokens. Maybe total input 50k tokens. Let's estimate more accurately.
+
+We can compute characters. The prompt content: each file. Let's estimate word count.
+
+Lot1: 100 records. Many sem abstract. Titles ~10 words. Abstracts present: let's count records with abstract in lot1:
+3 (100 words), 26 (200), 30 (300), 36 (150), 40 (150), 41 (120), 43 (100), 51 (100), 53 (150), 55 (200), 56 (100), 70 (150), 71 (100), 73 (100), 76 (150), 77 (100), 81 (100), 86 (50), 88 (100), 94 (150), 95? sem, 99? sem, 100 (150). Also 21? sem. So about 20 abstracts. Average 150 words = 3000 words. Titles 100*10=1000. Total lot1 words ~4000 + header 400 = 4400 words. Tokens ~ 4400*1.3 = 5700 tokens.
+
+Lot2: abstracts present: 10 (150), 11 (100), 15 (150), 29 (100), 32 (100), 40 (150), 49 (200), 53 (150), 56 (200), 57 (100), 58 (100), 64 (100), 65 (200), 76 (100), 77 (150), 78 (150), 79 (200), 81 (100), 87 (200), 99 (200). ~20 abstracts avg 150 = 3000 words. Titles 1000. Header 400. Total 4400 words ~5700 tokens.
+
+Lot3: abstracts present: 1 (150), 5 (300), 13 (200), 36 (150), 41 (150), 42 (150), 44 (150), 46 (150), 47 (150), 56 (200), 59 (200), 60 (150), 63 (150), 87 (150), 91 (200), 95 (150), 96 (100). ~17 abstracts avg 180 = 3060. Titles 1000. Header 400. Total 4460 words ~5800 tokens.
+
+Lot4: abstracts present: 1 (100), 5 (200), 11 (150), 12 (200), 16 (150), 24 (300), 29 (150), 32 (300), 43 (150), 48 (100), 56 (100), 60 (150), 67 (150), 82 (300), 83 (100), 90 (150), 93 (150). ~17 abstracts avg 180 = 3060. Titles 1000. Header 400. Total 4460 words ~5800 tokens.
+
+Lot5: 94 records. Abstracts present: 2 (200), 5 (300), 7 (150), 10 (150), 12 (150), 15 (200), 16 (100), 21 (200), 25 (200), 26 (300), 27 (200), 35 (200), 38 (200), 39 (200), 43 (150), 47 (150), 50 (200), 52 (150), 55 (100), 58 (100), 62 (200), 64 (150), 66 (200), 79 (100), 87 (150), 94 (100). ~26 abstracts avg 180 = 4680. Titles 94*10=940. Header 400. Total 6020 words ~7800 tokens.
+
+Sum input: 5700+5700+5800+5800+7800 = 30800 tokens. Plus our response: 494 lines. Each line "1: SIM" tokens: "1" ":" " SIM" maybe 3 tokens? Actually "1: SIM" could be tokens: "1", ":", " SIM" = 3. 494*3=1482. Total ~32,300 tokens. Plus initial user instructions? The files include all. So around 32k tokens. But could be 40k. Need maybe answer "aproximadamente 32 mil tokens" or "cerca de 30–35 mil". They asked "quantos tokens deu tudo?" We can say "Não tenho o tokenizador exato, mas estimando ~32.000 tokens no total (entrada + resposta)." If only files, ~30k. Our response ~1.5k. Total ~31.5k. We can mention approximate.
+
+But maybe they want exact count? We can't provide exact without tokenizer. We can say "com base em estimativa por caracteres/palavras, aproximadamente 31.000–33.000 tokens". Need answer in Portuguese. We should not output only lines? This is a new user message, not the triage task. So can respond conversationally.
+
+Need ensure not too verbose. Maybe include breakdown: 5 lotes ~30.5k tokens, resposta ~1.5k, total ~32k. If considering everything no formato. We can say "Não dá para saber exato sem tokenizador, mas fica em torno de 32 mil tokens." Good.
+
+Let's craft final.
